@@ -1,0 +1,191 @@
+$date
+	Wed Feb 12 00:40:35 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module control_tb $end
+$var wire 1 ! reg_write_en $end
+$var wire 1 " mem_write $end
+$var wire 1 # mem_to_reg $end
+$var wire 1 $ mem_read $end
+$var wire 1 % branch $end
+$var wire 1 & alu_src $end
+$var wire 2 ' alu_op [1:0] $end
+$var reg 8 ( op_code [7:0] $end
+$var integer 32 ) pass_count [31:0] $end
+$var integer 32 * test_count [31:0] $end
+$scope module uut $end
+$var wire 2 + alu_op [1:0] $end
+$var wire 1 & alu_src $end
+$var wire 1 % branch $end
+$var wire 1 $ mem_read $end
+$var wire 1 # mem_to_reg $end
+$var wire 1 " mem_write $end
+$var wire 8 , op_code [7:0] $end
+$var wire 1 ! reg_write_en $end
+$var parameter 7 - B_type $end
+$var parameter 7 . I_load_type $end
+$var parameter 7 / I_op_type $end
+$var parameter 7 0 R_type $end
+$var parameter 7 1 S_type $end
+$var reg 2 2 alu_op_reg [1:0] $end
+$var reg 1 3 alu_src_reg $end
+$var reg 1 4 branch_reg $end
+$var reg 1 5 mem_read_reg $end
+$var reg 1 6 mem_to_reg_reg $end
+$var reg 1 7 mem_write_reg $end
+$var reg 1 8 reg_write_en_reg $end
+$upscope $end
+$scope task run_test $end
+$var reg 2 9 exp_alu_op [1:0] $end
+$var reg 1 : exp_alu_src $end
+$var reg 1 ; exp_branch $end
+$var reg 1 < exp_mem_read $end
+$var reg 1 = exp_mem_to_reg $end
+$var reg 1 > exp_mem_write $end
+$var reg 1 ? exp_reg_write_en $end
+$var reg 65 @ test_name [64:0] $end
+$var reg 8 A test_op_code [7:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b100011 1
+b110011 0
+b10011 /
+b11 .
+b1100011 -
+$end
+#0
+$dumpvars
+bx A
+bx @
+x?
+x>
+x=
+x<
+x;
+x:
+bx 9
+08
+07
+06
+05
+04
+03
+b0 2
+b0 ,
+b0 +
+b0 *
+b0 )
+b0 (
+b0 '
+0&
+0%
+0$
+0#
+0"
+0!
+$end
+#100000
+1!
+18
+b10 '
+b10 +
+b10 2
+b110011 (
+b110011 ,
+b1 *
+b10111010001110010011101010110001101110100011010010110111101101110 @
+1?
+0:
+0>
+b10 9
+0=
+0<
+0;
+b110011 A
+#110000
+1&
+13
+b0 '
+b0 +
+b0 2
+b10011 (
+b10011 ,
+b10 *
+1:
+b0 9
+b10011 A
+b1 )
+#120000
+1#
+16
+1$
+15
+b11 (
+b11 ,
+b11 *
+1=
+1<
+b11 A
+b10 )
+#130000
+0!
+08
+1"
+17
+0#
+06
+0$
+05
+b100011 (
+b100011 ,
+b100 *
+0?
+1>
+0=
+0<
+b100011 A
+b11 )
+#140000
+0&
+03
+0"
+07
+b1 '
+b1 +
+b1 2
+1%
+14
+b1100011 (
+b1100011 ,
+b101 *
+0:
+0>
+b1 9
+1;
+b1100011 A
+b100 )
+#150000
+b0 '
+b0 +
+b0 2
+0%
+04
+b1111111 (
+b1111111 ,
+b110 *
+b10110010000100000011011110111000001100011011011110110010001100101 @
+b0 9
+0;
+b1111111 A
+b101 )
+#160000
+b110 )
+#170000
