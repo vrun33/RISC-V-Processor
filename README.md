@@ -61,3 +61,9 @@ This extracts 32-bits corresponding to the instruction indicated by the program 
 - The reason why other instruction bits are not considered (in the input) is because they are pre-determined (see below).
 
 ![ALUControl truth table](ALUControl_truth_table.jpg)
+
+## Data Memory
+
+- INPUTS: `Address`, `Write_data`, `MemRead`, `MemWrite`
+
+- OUTPUTS: `Read_data`
