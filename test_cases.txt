@@ -1,0 +1,12 @@
+// Each line contains one 32-bit instruction number
+12485779    // ADDI x1, x2, 12
+4293926035  // ADDI x1, x2, -12
+16785539    // LW x1, 16(x2)
+4293299331  // LW x1, -16(x2)
+35133987    // SW x1, 20(x2)
+4274746915  // SW x1, -20(x2)
+2119779     // BEQ x1, x2, 16
+4272627939  // BEQ x1, x2, -16
+2147483667  // Maximum positive immediate
+2147483667  // Maximum negative immediate
+127         // Invalid opcode test
