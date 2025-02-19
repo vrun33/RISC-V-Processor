@@ -1,4 +1,4 @@
-# Pipelined RISC-V Processor in iVerilog
+# Sequential RISC-V Processor in iVerilog
 
 ## ALU
 
