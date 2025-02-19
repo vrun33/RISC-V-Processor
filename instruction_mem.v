@@ -1,6 +1,6 @@
 module instruction_memory #(
     parameter MEM_SIZE = 4095,
-    parameter MEM_INIT_FILE = "imemory_2.txt"
+    parameter MEM_INIT_FILE = "test_program_2.txt"
     // parameter MEM_INIT_FILE = "imemory.txt"
 ) (
     input wire clk,
@@ -51,7 +51,7 @@ module instruction_memory #(
         if (reset) begin
             tmp <= 32'h0;  // Reset the instruction register to zero
         end else begin
-            tmp <= {mem[addr+3], mem[addr+2], mem[addr+1], mem[addr+0]};
+            tmp <= {mem[addr+0], mem[addr+1], mem[addr+2], mem[addr+3]};
         end
     end
 

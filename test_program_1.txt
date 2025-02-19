@@ -1,0 +1,31 @@
+// Basic arithmetic and logical operations 
+00500113    // addi x2, x0, 5          # x2 = 5
+00A00193    // addi x3, x0, 10         # x3 = 10
+003100B3    // add x1, x2, x3          # x1 = x2 + x3 = 15
+40310133    // sub x2, x2, x3          # x2 = x2 - x3 = -5
+0021A233    // slt x4, x3, x2          # x4 = (x3 < x2) ? 1 : 0 = 0
+0041F2B3    // and x5, x3, x4          # x5 = x3 & x4 = 0
+00416333    // or x6, x2, x4           # x6 = x2 | x4 = -5
+004143B3    // xor x7, x2, x4          # x7 = x2 ^ x4 = -5
+
+// Load/Store operations (using sd/ld instead of sw/lw)
+00100437    // addi x8, x0, 1          # x8 = 1
+00343023    // sd x3, 0(x8)            # Store x3 to memory
+00043483    // ld x9, 0(x8)            # Load into x9
+
+// Shifts
+00119493    // sll x9, x3, 1           # x9 = x3 << 1 = 20
+00115513    // srl x10, x2, 1          # x10 = x2 >> 1
+40115593    // sra x11, x2, 1          # x11 = x2 >> 1 (arithmetic)
+
+// Branches
+00208663    // beq x1, x2, skip1       # Branch if equal (not taken)
+00300613    // addi x12, x0, 3         # Should execute
+skip1:
+00B50463    // beq x10, x11, skip2     # Branch if equal (taken)
+00400693    // addi x13, x0, 4         # Should not execute
+skip2:
+00000713    // addi x14, x0, 0         # Normal execution resumes
+
+// End program
+00000000    // Halt

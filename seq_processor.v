@@ -101,7 +101,7 @@ module seq_processor (
         .In1(64'h0000000000000004),
         .In2(pc_out),
         .Cin(1'b0),
-        .Sum(mux_pc_2),
+        .Sum(mux_pc_1),
         .Carry(tmp_carry)
     );
 
@@ -114,7 +114,7 @@ module seq_processor (
         .In1(imm_shifted),
         .In2(pc_out),
         .Cin(1'b0),
-        .Sum(mux_pc_1),
+        .Sum(mux_pc_2),
         .Carry(tmp_carry_2)
     );
 
