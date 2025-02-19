@@ -1,7 +1,7 @@
 // Control Block 
 
 module control(
-    input wire [7:0] op_code,
+    input wire [6:0] op_code,
     output wire branch,
     output wire mem_read,
     output wire mem_to_reg,

@@ -4,7 +4,7 @@
 
 module control_tb;
     // Inputs
-    reg [7:0] op_code;
+    reg [6:0] op_code;
     
     // Outputs
     wire branch;
