@@ -1,15 +1,15 @@
 // Include all the modules for the ALU
-`include "fa1.v"
-`include "fa64.v"
-`include "sub64.v"
-`include "and64.v"
-`include "or64.v"
-`include "xor64.v"
-`include "slt64.v"
-`include "sltu64.v"
-`include "sra64.v"
-`include "srl64.v"
-`include "sll64.v"
+`include "ALU/fa1.v"
+`include "ALU/fa64.v"
+`include "ALU/sub64.v"
+`include "ALU/and64.v"
+`include "ALU/or64.v"
+`include "ALU/xor64.v"
+`include "ALU/slt64.v"
+`include "ALU/sltu64.v"
+`include "ALU/sra64.v"
+`include "ALU/srl64.v"
+`include "ALU/sll64.v"
 
 // Wrapper ALU module
 module alu(
