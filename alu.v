@@ -325,10 +325,7 @@ module alu(
     input signed [63:0] b,
     input [3:0] control,  
     output wire [63:0] result,
-    output wire z_flag,      // Zero flag
-    output wire n_flag,      // Negative flag
-    output wire v_flag,      // Overflow flag
-    output wire c_flag       // Carry flag
+    output wire z_flag      // Zero flag
 );
 
     wire [63:0] add_result, sub_result, and_result, or_result, xor_result;

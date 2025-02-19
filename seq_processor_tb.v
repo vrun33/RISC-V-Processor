@@ -26,7 +26,7 @@ module seq_processor_tb;
     // Test stimulus
     initial begin
         $dumpfile("seq_processor_tb.vcd");
-        $dumpvars(0, seq_processor_tb);
+        $dumpvars(1, uut);
         
         // Initialize test counter
         test_count = 0;
@@ -53,10 +53,10 @@ module seq_processor_tb;
             $display("Memory Write Enable: %b", uut.mem_write);
             $display("Branch: %b", uut.branch);
             
-            // Check for program completion (you can modify this based on your needs)
+            // Check for program completion
             if (uut.instr == 32'h00000000) begin
                 $display("\nProgram completed after %0d cycles", i + 1);
-                break;
+                i = 100;
             end
             
             test_count = test_count + 1;
@@ -73,10 +73,10 @@ module seq_processor_tb;
         end
         
         // Display final data memory contents (first 16 words)
-        $display("\nData Memory Contents (First 16 words):");
-        for (i = 0; i < 16; i = i + 1) begin
-            $display("Mem[%0d]: %h", i, uut.data_memory_inst.memory[i]);
-        end
+        // $display("\nData Memory Contents (First 16 words):");
+        // for (i = 0; i < 16; i = i + 1) begin
+        //     $display("Mem[%0d]: %h", i, uut.data_memory_inst.memory[i]);
+        // end
         
         #100;
         $finish;

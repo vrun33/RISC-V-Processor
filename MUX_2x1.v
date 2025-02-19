@@ -2,13 +2,11 @@
 
 module mux_2x1(in1, in2, s0, y);
 
-    input in1, in2, s0;
-    output y;
-    wire Nots0, p, q;
+    input wire [63:0]in1;
+    input wire [63:0]in2;
+    input wire s0;
+    output wire [63:0]y;
 
-    not N1(Nots0, s0);
-    and A1(p, in1, Nots0);
-    and A2(q, in2, s0);
-    or O1(y, p, q);
+    assign y = s0 ? in2 : in1;
 
 endmodule
