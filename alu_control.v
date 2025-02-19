@@ -1,14 +1,14 @@
 module alu_control (
     input wire [1:0] alu_op,      // {alu_op_1, alu_op_0}
-    input wire [3:0] instr_bits,   // {i_30, i_14, i_13, i_12}
+    input wire [3:0] instr_bits,   // {30,14,13,12}
     output wire [3:0] op          // {op_3, op_2, op_1, op_0}
 );
     wire alu_op_1 = alu_op[1];
     wire alu_op_0 = alu_op[0];
-    wire i_30 = instr_bits[3];
-    wire i_14 = instr_bits[1];
-    wire i_13 = instr_bits[2];
-    wire i_12 = instr_bits[0];
+    wire i_30 = instr_bits[3];    
+    wire i_14 = instr_bits[2];    
+    wire i_13 = instr_bits[1];    
+    wire i_12 = instr_bits[0];    
     
     // Gate level implementation of the ALU control logic
     wire temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9;
