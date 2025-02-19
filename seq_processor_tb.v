@@ -41,7 +41,7 @@ module seq_processor_tb;
         #10;
         
         // Run program for 100 cycles or until halt condition
-        for (i = 0; i < 25; i = i + 1) begin
+        for (i = 0; i < 50; i = i + 1) begin
             @(posedge clk);
             
             // Display current processor state
