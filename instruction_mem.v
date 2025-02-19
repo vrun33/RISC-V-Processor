@@ -3,6 +3,7 @@ module instruction_memory #(
     parameter MEM_INIT_FILE = "imemory.txt"
 ) (
     input wire clk,
+    input wire reset,  // Added reset signal
     input wire [63:0] addr,
     output wire [31:0] instr
 );
@@ -39,11 +40,16 @@ module instruction_memory #(
         $display("Loaded %0d bytes from %s", i, MEM_INIT_FILE);
     end
 
-    reg [31:0]tmp;
+    reg [31:0] tmp;
     assign instr = tmp;
 
-    // Read instruction (little-endian)
-    always @(posedge clk)
-        tmp <= {mem[addr+3], mem[addr+2], mem[addr+1], mem[addr+0]};
+    // Read instruction with reset (little-endian)
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            tmp <= 32'h0;  // Reset the instruction register to zero
+        end else begin
+            tmp <= {mem[addr+3], mem[addr+2], mem[addr+1], mem[addr+0]};
+        end
+    end
 
 endmodule
