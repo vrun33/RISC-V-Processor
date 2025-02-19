@@ -1,6 +1,6 @@
 // 32 Bit Adder
 
-module CLA_N_Bit #(parameter Num = 32)(In1, In2, Cin, Sum, Carry);
+module CLA_N_Bit #(parameter Num = 64)(In1, In2, Cin, Sum, Carry);
 
     input [Num - 1 : 0]In1;
     input [Num - 1 : 0]In2;

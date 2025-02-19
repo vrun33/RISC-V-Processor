@@ -1,6 +1,6 @@
 // 2x1 MUX
 
-module Mux2x1(in1, in2, s0, y);
+module mux2x1(in1, in2, s0, y);
 
     input in1, in2, s0;
     output y;
