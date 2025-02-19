@@ -10,6 +10,7 @@ module control(
     output wire alu_src,
     output wire reg_write_en
     );
+    
 
     localparam R_type = 7'b0110011;
     localparam I_op_type = 7'b0010011;
