@@ -4,7 +4,7 @@ module instruction_memory #(
 ) (
     input wire clk,
     input wire [63:0] addr,
-    output reg [31:0] instr
+    output wire [31:0] instr
 );
     // Memory array
     reg [7:0] mem [0:MEM_SIZE-1];
@@ -39,8 +39,11 @@ module instruction_memory #(
         $display("Loaded %0d bytes from %s", i, MEM_INIT_FILE);
     end
 
+    reg [31:0]tmp;
+    assign instr = tmp;
+
     // Read instruction (little-endian)
     always @(posedge clk)
-        instr <= {mem[addr+3], mem[addr+2], mem[addr+1], mem[addr+0]};
+        tmp <= {mem[addr+3], mem[addr+2], mem[addr+1], mem[addr+0]};
 
 endmodule
