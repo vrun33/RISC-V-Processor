@@ -228,10 +228,9 @@ module slt64(
     input [63:0] rs1,    // A
     input [63:0] rs2,    // B
     output [63:0] rd,
-    output z_flag     
+    output wire z_flag     
 );
     wire [63:0] diff;
-    wire c_out, v_flag, n_flag, z_flag;
     wire less_than;      // N XOR V
     
     // rs1 - rs2
@@ -256,11 +255,10 @@ endmodule
 module sltu64(
     input [63:0] rs1,    // A
     input [63:0] rs2,    // B
-    output [63:0] rd,     // output
-    output z_flag          // zero flag
+    output [63:0] rd,    // output
+    output wire z_flag   // zero flag
 );
     wire [63:0] diff;
-    wire c_out, v_flag, n_flag, z_flag;
     wire less_than;
     
     // rs1 - rs2

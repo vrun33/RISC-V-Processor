@@ -10,7 +10,7 @@
 `include "CLA_64_BIT.v"
 `include "and2.v"
 `include "sl1.v"
-`include "ALU/alu.v"
+`include "alu.v"
 
 module seq_processor (
     input clk,
