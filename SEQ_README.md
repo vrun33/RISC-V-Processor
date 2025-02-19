@@ -1,10 +1,14 @@
 # Sequential RISC-V Processor in iVerilog
 
+The components in this processor are mentioned below.
+
 ## ALU
 
-- INPUTS: `arg1`, `arg2`, `control_signal`
+- INPUTS: `input1`, `input2`, `control_signal`
 
 - OUTPUTS: `result`, `zero_flag`
+
+The ALU takes the two inputs values and performs the operation according to the control signal. The result is stored in `result` and if the result of the ALU operation is zero, the status for the same is stored in `zero_flag`.
 
 ## Register File
 
