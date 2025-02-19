@@ -12,7 +12,7 @@ module instruction_memory_tb;
     
     instruction_memory #(
         .MEM_SIZE(4095),
-        .MEM_INIT_FILE("imemory.txt")
+        .MEM_INIT_FILE("imemory_2.txt")
     ) imem (
         .clk(clk),
         .addr(addr),

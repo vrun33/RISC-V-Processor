@@ -1,6 +1,6 @@
 module instruction_memory #(
     parameter MEM_SIZE = 4095,
-    parameter MEM_INIT_FILE = "imemory.txt"
+    parameter MEM_INIT_FILE = "imemory_2.txt"
     // parameter MEM_INIT_FILE = "imemory.txt"
 ) (
     input wire clk,
@@ -31,6 +31,8 @@ module instruction_memory #(
         i = 0;
         while (!$feof(file) && i < MEM_SIZE) begin
             status = $fscanf(file, "%d", decimal_value);
+            // Print whatever is read
+            // $display("Read %0d", decimal_value);
             if (status == 1 && decimal_value >= 0 && decimal_value <= 255) begin
                 mem[i] = decimal_value;
                 i = i + 1;
