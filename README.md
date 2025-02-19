@@ -5,4 +5,3 @@ This is a basic RISC-V processor implemented in iVerilog, as part of the course 
 Team Name - Tervis Scoot
 
 Team Members - Siddarth G, Varun S, M. Samartha
-
