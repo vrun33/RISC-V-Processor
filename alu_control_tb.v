@@ -2,14 +2,28 @@
 `include "alu_control.v"
 
 module alu_control_tb;
-    reg alu_op_1, alu_op_0, i_30, i_14, i_13, i_12;
-    wire op_3, op_2, op_1, op_0;
+    reg [1:0] alu_op;
+    reg [3:0] instr_bits;
+    wire [3:0] op;
 
     integer pass_count = 0;
 
+    // Map the individual bits to make test case writing clearer
+    wire alu_op_1 = alu_op[1];
+    wire alu_op_0 = alu_op[0];
+    wire i_30 = instr_bits[3];
+    wire i_14 = instr_bits[1];
+    wire i_13 = instr_bits[2];
+    wire i_12 = instr_bits[0];
+    wire op_3 = op[3];
+    wire op_2 = op[2];
+    wire op_1 = op[1];
+    wire op_0 = op[0];
+
     alu_control uut (
-        .alu_op_1(alu_op_1), .alu_op_0(alu_op_0), .i_30(i_30), .i_14(i_14), .i_13(i_13), .i_12(i_12),
-        .op_3(op_3), .op_2(op_2), .op_1(op_1), .op_0(op_0)
+        .alu_op(alu_op),
+        .instr_bits(instr_bits),
+        .op(op)
     );
 
     initial begin
@@ -17,23 +31,23 @@ module alu_control_tb;
         $dumpvars(0, alu_control_tb);
 
         // Test cases based on provided table
-        {alu_op_1, alu_op_0, i_30, i_14, i_13, i_12} = 6'b00xxxx; #10;
-        check_output(4'b0010, op_3, op_2, op_1, op_0);
+        alu_op = 2'b00; instr_bits = 4'bxxxx; #10;
+        check_output(4'b0010, op);
 
-        {alu_op_1, alu_op_0, i_30, i_14, i_13, i_12} = 6'b01xxxx; #10;
-        check_output(4'b0110, op_3, op_2, op_1, op_0);
+        alu_op = 2'b01; instr_bits = 4'bxxxx; #10;
+        check_output(4'b0110, op);
 
-        {alu_op_1, alu_op_0, i_30, i_14, i_13, i_12} = 6'b100000; #10;
-        check_output(4'b0010, op_3, op_2, op_1, op_0);
+        alu_op = 2'b10; instr_bits = 4'b0000; #10;
+        check_output(4'b0010, op);
 
-        {alu_op_1, alu_op_0, i_30, i_14, i_13, i_12} = 6'b101000; #10;
-        check_output(4'b0110, op_3, op_2, op_1, op_0);
+        alu_op = 2'b10; instr_bits = 4'b1000; #10;
+        check_output(4'b0110, op);
 
-        {alu_op_1, alu_op_0, i_30, i_14, i_13, i_12} = 6'b100111; #10;
-        check_output(4'b0000, op_3, op_2, op_1, op_0);
+        alu_op = 2'b10; instr_bits = 4'b0111; #10;
+        check_output(4'b0000, op);
 
-        {alu_op_1, alu_op_0, i_30, i_14, i_13, i_12} = 6'b100110; #10;
-        check_output(4'b0001, op_3, op_2, op_1, op_0);
+        alu_op = 2'b10; instr_bits = 4'b0110; #10;
+        check_output(4'b0001, op);
 
         $display("Total Passed Cases: %0d out of 6", pass_count);
         $finish;
@@ -41,10 +55,10 @@ module alu_control_tb;
 
     task check_output;
         input [3:0] expected;
-        input op_3, op_2, op_1, op_0;
+        input [3:0] actual;
         begin
-            $display("Expected: %b, Obtained: %b%b%b%b", expected, op_3, op_2, op_1, op_0);
-            if ({op_3, op_2, op_1, op_0} === expected) pass_count = pass_count + 1;
+            $display("Expected: %b, Obtained: %b", expected, actual);
+            if (actual === expected) pass_count = pass_count + 1;
             else $display("Test Failed");
         end
     endtask
