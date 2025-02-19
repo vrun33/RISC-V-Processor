@@ -1,6 +1,6 @@
 module instruction_memory #(
     parameter MEM_SIZE = 4095,
-    parameter MEM_INIT_FILE = "test_program_2.txt"
+    parameter MEM_INIT_FILE = "test_program_4.txt"
     // parameter MEM_INIT_FILE = "imemory.txt"
 ) (
     input wire clk,
