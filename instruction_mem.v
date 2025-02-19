@@ -46,7 +46,7 @@ module instruction_memory #(
     reg [31:0] tmp;
     assign instr = tmp;
 
-    // Read instruction with reset (little-endian)
+    // Read instruction with reset (big-endian)
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             tmp <= 32'h0;  // Reset the instruction register to zero
