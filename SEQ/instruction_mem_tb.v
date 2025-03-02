@@ -3,6 +3,7 @@
 
 module instruction_memory_tb;
     reg clk;
+    reg reset;
     reg [63:0] addr;
     wire [31:0] instr;
     
@@ -12,9 +13,10 @@ module instruction_memory_tb;
     
     instruction_memory #(
         .MEM_SIZE(4095),
-        .MEM_INIT_FILE("imemory_2.txt")
+        .MEM_INIT_FILE("Test_imemory_2.txt")
     ) imem (
         .clk(clk),
+        .reset(reset),
         .addr(addr),
         .instr(instr)
     );
@@ -58,6 +60,7 @@ module instruction_memory_tb;
     initial begin
         // Initialize signals
         addr = 0;
+        reset = 0;
         test_count = 0;
         pass_count = 0;
 
@@ -68,37 +71,37 @@ module instruction_memory_tb;
 
         // Test cases for little-endian format
         // Original test cases
-        run_test(0, 32'h33221100);    // First instruction (bytes 0-3)
+        run_test(0, 32'h00500113);    // First instruction (bytes 0-3)
         #10;
-        run_test(4, 32'h77665544);    // Second instruction (bytes 4-7)
+        run_test(4, 32'h00a00193);    // Second instruction (bytes 4-7)
         #10;
-        run_test(8, 32'hBBAA9988);    // Third instruction (bytes 8-11)
+        run_test(8, 32'h003100b3);    // Third instruction (bytes 8-11)
         #10;
-        run_test(12, 32'hFFEEDDCC);   // Fourth instruction (bytes 12-15)
+        run_test(12, 32'h40310133);   // Fourth instruction (bytes 12-15)
         #10;
         
         // Additional test cases
-        run_test(16, 32'h3F2F1F0F);   // Fifth instruction (bytes 16-19)
+        run_test(16, 32'h0021a233);   // Fifth instruction (bytes 16-19)
         #10;
-        run_test(20, 32'h7F6F5F4F);   // Sixth instruction (bytes 20-23)
+        run_test(20, 32'h0041f2b3);   // Sixth instruction (bytes 20-23)
         #10;
-        run_test(24, 32'hBFAF9F8F);   // Seventh instruction (bytes 24-27)
+        run_test(24, 32'h00416333);   // Seventh instruction (bytes 24-27)
         #10;
-        run_test(28, 32'hF7EFDFCF);   // Eighth instruction (bytes 28-31)
+        run_test(28, 32'h004143b3);   // Eighth instruction (bytes 28-31)
         #10;
-        run_test(32, 32'h281E140A);   // Ninth instruction (bytes 32-35)
+        run_test(32, 32'h00002437);   // Ninth instruction (bytes 32-35)
         #10;
-        run_test(36, 32'h50463C32);   // Tenth instruction (bytes 36-39)
+        run_test(36, 32'h06042223);   // Tenth instruction (bytes 36-39)
         #10;
-        run_test(40, 32'h786E645A);   // Eleventh instruction (bytes 40-43)
+        run_test(40, 32'h06442483);   // Eleventh instruction (bytes 40-43)
         #10;
-        run_test(44, 32'hA0968C82);   // Twelfth instruction (bytes 44-47)
+        run_test(44, 32'h00119493);   // Twelfth instruction (bytes 44-47)
         #10;
-        run_test(48, 32'h412D1905);   // Thirteenth instruction (bytes 48-51)
+        run_test(48, 32'h00115513);   // Thirteenth instruction (bytes 48-51)
         #10;
-        run_test(52, 32'h917D6955);   // Fourteenth instruction (bytes 52-55)
+        run_test(52, 32'h40115593);   // Fourteenth instruction (bytes 52-55)
         #10;
-        run_test(56, 32'hE1CDB9A5);   // Fifteenth instruction (bytes 56-59)
+        run_test(56, 32'h00208663);   // Fifteenth instruction (bytes 56-59)
         #10;
         
         // Report Results
