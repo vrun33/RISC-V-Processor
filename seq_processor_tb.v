@@ -33,15 +33,14 @@ module seq_processor_tb;
         
         // Reset sequence
         reset = 1;
-        @(posedge clk);
         #2;
         reset = 0;
         
         // Wait for instruction memory to be loaded
-        #10;
+        // #10;
         
-        // Run program for 100 cycles or until halt condition
-        for (i = 0; i < 500; i = i + 1) begin
+        // Run program for 50 cycles or until halt condition
+        for (i = 0; i < 50; i = i + 1) begin
             @(posedge clk);
             
             // Display current processor state
@@ -56,7 +55,7 @@ module seq_processor_tb;
             // Check for program completion
             if (uut.instr == 32'h00000000) begin
                 $display("\nProgram completed after %0d cycles", i + 1);
-                i = 500;
+                i = 50;
             end
             
             test_count = test_count + 1;

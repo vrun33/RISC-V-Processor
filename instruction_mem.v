@@ -1,6 +1,6 @@
 module instruction_memory #(
     parameter MEM_SIZE = 4095,
-    parameter MEM_INIT_FILE = "test_program_5.txt"
+    parameter MEM_INIT_FILE = "Test_Vector_Add.txt"
     // parameter MEM_INIT_FILE = "imemory.txt"
 ) (
     input wire clk,
@@ -46,13 +46,19 @@ module instruction_memory #(
     reg [31:0] tmp;
     assign instr = tmp;
 
+    // // Read instruction with reset (big-endian)
+    // always @(posedge clk or posedge reset) begin
+    //     if (reset) begin
+    //         tmp <= 32'h0;  // Reset the instruction register to zero
+    //     end else begin
+    //         tmp <= {mem[addr+0], mem[addr+1], mem[addr+2], mem[addr+3]};
+    //     end
+    // end
+
     // Read instruction with reset (big-endian)
-    always @(posedge clk or posedge reset) begin
-        if (reset) begin
-            tmp <= 32'h0;  // Reset the instruction register to zero
-        end else begin
-            tmp <= {mem[addr+0], mem[addr+1], mem[addr+2], mem[addr+3]};
-        end
+    always @(*) 
+    begin
+        tmp <= {mem[addr+0], mem[addr+1], mem[addr+2], mem[addr+3]};
     end
 
 endmodule
