@@ -65,7 +65,7 @@
 
 module instruction_memory #(
     parameter MEM_SIZE = 4095,
-    parameter MEM_INIT_FILE = "Test_imemory_2.txt"
+    parameter MEM_INIT_FILE = "Test_Vector_Add.txt"
 ) (
     input wire clk,
     input wire reset,  // Added reset signal

@@ -21,6 +21,8 @@ module data_memory #(parameter DATA_WIDTH = 64, parameter ADDR_WIDTH = 10) (
         end 
         else if (mem_write) begin
             mem[addr] <= write_data; // Non-blocking assignment for sequential logic
+            // Print data that is being written
+            $display("Writing %h to address %h", write_data, addr);
         end
     end
 
@@ -36,5 +38,6 @@ module data_memory #(parameter DATA_WIDTH = 64, parameter ADDR_WIDTH = 10) (
             read_data_reg = 0; // Output 0 if mem_read is low (or High-z if required)
         end
     end
+
 endmodule
 

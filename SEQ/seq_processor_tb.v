@@ -70,6 +70,19 @@ module seq_processor_tb;
         for (i = 0; i < 32; i = i + 1) begin
             $display("x%0d: %h", i, uut.register_file_inst.registers[i]);
         end
+
+        // // Display final data memory contents - at locations 10, 11, 12, 20, 21, 22, 40, 41, 42
+        // $display("\nData Memory Contents (Locations 10, 11, 12, 20, 21, 22, 40, 41, 42):");
+        // $display("Mem[10]: %h", uut.data_memory_inst.memory[10]);
+        // $display("Mem[11]: %h", uut.data_memory_inst.memory[11]);
+        // $display("Mem[12]: %h", uut.data_memory_inst.memory[12]);
+        // $display("Mem[20]: %h", uut.data_memory_inst.memory[20]);
+        // $display("Mem[21]: %h", uut.data_memory_inst.memory[21]);
+        // $display("Mem[22]: %h", uut.data_memory_inst.memory[22]);
+        // $display("Mem[40]: %h", uut.data_memory_inst.memory[40]);
+        // $display("Mem[41]: %h", uut.data_memory_inst.memory[41]);
+        // $display("Mem[42]: %h", uut.data_memory_inst.memory[42]);
+
         
         // Display final data memory contents (first 16 words)
         // $display("\nData Memory Contents (First 16 words):");
