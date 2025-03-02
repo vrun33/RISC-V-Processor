@@ -10,6 +10,8 @@ Team Members - Siddarth G, Varun S, M. Samartha
 
 `test_program_5.txt` contains instructions for checking vector addition (34 instructions)
 
+`test_program_5.txt` contains untampered instructions for checking vector addition (34 instructions)
+
 Arithmetic and Logical test instructions count: first 8
 (first 32 lines of `test_program_4.txt`)
 
