@@ -115,7 +115,7 @@ This gives us the final datapath for the sequential processor like in the figure
 
 Instructions supported: and, sub, add, or, ld, sd and beq.
 
-![Sequential Datapath](Seq_dataPath.png)
+![Sequential Datapath](Seq_Datapath.png)
 
 Few Notes:
 
