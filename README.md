@@ -1,6 +1,8 @@
 # Sequential RISC-V Processor in iVerilog
 
-This is a basic RISC-V processor implemented in iVerilog, as part of the course project for the Spring 25' course "Intro. to Processor Architecture" at IIIT Hyderabad. The components in the sequential processor are mentioned below. 
+**One might think it's little endian or big endian, but you'll be surprised to know it's PROUD INDIAN o7**
+
+This is a basic RISC-V processor implemented in iVerilog, as part of the course project for the Spring 25' course "Intro. to Processor Architecture" at IIIT Hyderabad. The components in the sequential processor are mentioned below.
 
 Team Name - Tervis Scoot
 
