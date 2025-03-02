@@ -121,7 +121,8 @@ module sll64(
     input [63:0] rs1,   
     input [63:0] rs2,    
     output [63:0] result,
-    output z_flag
+    output z_flag,
+    output v_flag
 );
     wire [5:0] shift_amt;  
     assign shift_amt = rs2[5:0]; 
@@ -142,6 +143,7 @@ module sll64(
     
     assign result = stage32;  
     assign z_flag = (result == 64'b0);
+    assign v_flag = (rs1[63] ^ result[63]);
 
 endmodule
 
@@ -336,7 +338,7 @@ module alu(
     wire sub_cout, sub_v, sub_n, sub_z;
     wire and_z, or_z, xor_z;
     wire slt_z, sltu_z;
-    wire sra_z, srl_z, sll_z;
+    wire sra_z, srl_z, sll_z, sll_v;
 
     reg [63:0] reg_result;
     reg reg_z_flag, reg_n_flag, reg_v_flag, reg_c_flag;
@@ -433,7 +435,8 @@ module alu(
         .rs1(a),
         .rs2(b),
         .result(sll_result),
-        .z_flag(sll_z)
+        .z_flag(sll_z),
+        .v_flag(sll_v)
     );
 
     // Select result and set flags based on control signal
@@ -506,7 +509,7 @@ module alu(
                 reg_result = sll_result;
                 reg_z_flag = sll_z;
                 reg_n_flag = sll_result[63];
-                reg_v_flag = 1'b0;
+                reg_v_flag = sll_v;
                 reg_c_flag = 1'b0;
             end
             default: begin
