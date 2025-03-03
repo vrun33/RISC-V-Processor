@@ -40,7 +40,7 @@ module seq_processor_tb;
         // #10;
         
         // Run program for 200 cycles or until halt condition
-        for (i = 0; i < 500; i = i + 1) begin
+        for (i = 0; i < 200; i = i + 1) begin
             @(posedge clk);
             
             // Display current processor state
@@ -60,11 +60,11 @@ module seq_processor_tb;
             
             // reset at the given clock cycle
             // essentially, resets pc (pc =0) and thus restarts the program
-            if (i == 50) begin
-                reset = 1;
-                #2;
-                reset = 0;
-            end
+            // if (i == 50) begin
+            //     reset = 1;
+            //     #2;
+            //     reset = 0;
+            // end
 
             test_count = test_count + 1;
         end
