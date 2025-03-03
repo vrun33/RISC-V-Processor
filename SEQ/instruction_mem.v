@@ -1,3 +1,4 @@
+// Reads decimal values
 // module instruction_memory #(
 //     parameter MEM_SIZE = 4095,
 //     parameter MEM_INIT_FILE = "Test_Vector_Add.txt"
@@ -63,9 +64,10 @@
 
 // endmodule
 
+// Reads hex values
 module instruction_memory #(
     parameter MEM_SIZE = 4095,
-    parameter MEM_INIT_FILE = "Test_Vector_Add.txt"
+    parameter MEM_INIT_FILE = "Test_Basic_Code.txt"
 ) (
     input wire clk,
     input wire reset,  // Added reset signal
