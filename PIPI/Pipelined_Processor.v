@@ -45,17 +45,48 @@ module seq_processor (
     wire tmp_carry_2;
     wire flush;
     wire IF_ID_write;
-    wire [31:0] instr_reg_file;
+    wire [31:0] instr_IF_ID;
 
     // Instantiate Hardware
-    // Register files - Output variables have the reg_file suffix    
+    // Register files  
     IF_ID if_id_inst(
         .clk(clk),
         .reset(reset),
         .flush(flush),
         .write(IF_ID_write),
         .instr_in(instr),
-        .instr_out(instr_reg_file)
+        .instr_out(instr_IF_ID)
+    );
+
+    ID_EX id_ex_inst(
+        .clk(clk),
+        .reset(reset),
+        .data_in_1(read_data1),
+        .data_in_2(read_data2),
+        .ID_EX_rs1(instr_IF_ID[19:15]),
+        .ID_EX_rs2(instr_IF_ID[24:20]),
+        .ID_EX_rd(instr_IF_ID[11:7]),
+        .mem_read(mem_read),
+        .mem_to_reg(mem_to_reg),
+        .reg_write_en(reg_write_en),
+        .alu_control(op),
+        .mem_write(mem_write),
+        .alu_src(alu_src),
+        .branch(branch),
+        .imm_gen(imm),
+        .read_data1(read_data1_ID_EX),
+        .read_data2(read_data2_ID_EX),
+        .mem_read_out(mem_read_ID_EX),
+        .mem_to_reg_out(mem_to_reg_ID_EX),
+        .reg_write_en_out(reg_write_en_ID_EX),
+        .alu_control_out(op_ID_EX),
+        .mem_write_out(mem_write_ID_EX),
+        .alu_src_out(alu_src_ID_EX),
+        .imm_gen_out(imm_ID_EX),
+        .ID_EX_rs1_out(rs1_ID_EX),
+        .ID_EX_rs2_out(rs2_ID_EX),
+        .ID_EX_rd_out(rd_ID_EX),
+        .branch_out(branch_ID_EX)
     );
 
     pc pc_inst(
@@ -73,7 +104,7 @@ module seq_processor (
     );
 
     control control_inst(
-        .op_code(instr_reg_file[6:0]),
+        .op_code(instr_IF_ID[6:0]),
         .branch(branch),
         .mem_read(mem_read),
         .mem_to_reg(mem_to_reg),
@@ -86,17 +117,17 @@ module seq_processor (
     register_file register_file_inst(
         .clk(clk),
         .reset(reset),
-        .read_reg1(instr_reg_file[19:15]),
-        .read_reg2(instr_reg_file[24:20]),
-        .write_reg(instr_reg_file[11:7]),
-        .write_data(write_data),
-        .reg_write_en(reg_write_en),
+        .read_reg1(instr_IF_ID[19:15]),
+        .read_reg2(instr_IF_ID[24:20]),
+        .write_reg(instr_IF_ID[11:7]),
+        .write_data(write_data), // Fix it later
+        .reg_write_en(reg_write_en), // Fix it later
         .read_data1(read_data1),
         .read_data2(read_data2)
     );
 
     imm_gen imm_gen_inst(
-        .instr(instr_reg_file),
+        .instr(instr_IF_ID),
         .imm(imm)
     );
 
@@ -112,7 +143,7 @@ module seq_processor (
 
     alu_control alu_control_inst(
         .alu_op(alu_op),
-        .instr_bits({instr_reg_file[30], instr_reg_file[14:12]}),
+        .instr_bits({instr_IF_ID[30], instr_IF_ID[14:12]}),
         .op(op)
     );
 
@@ -145,29 +176,29 @@ module seq_processor (
     );
 
     and2 and_inst(
-        .in1(branch),
+        .in1(branch_ID_EX),
         .in2(z_flag),
         .out(and_out)
     );
 
     mux_2x1 mux_mem(
-        .in1(alu_out),
-        .in2(read_data),
-        .s0(mem_to_reg),
+        .in1(alu_out), // Fix it later
+        .in2(read_data), // Fix it later
+        .s0(mem_to_reg), // Fix it later
         .y(write_data)
     );
 
     mux_2x1 mux_reg_alu(
-        .in1(read_data2),
-        .in2(imm),
-        .s0(alu_src),
+        .in1(read_data2_ID_EX),
+        .in2(imm_ID_EX),
+        .s0(alu_src_ID_EX),
         .y(alu_in_2)
     );
 
     alu alu_inst(
-        .a(read_data1),
+        .a(read_data1_ID_EX),
         .b(alu_in_2),
-        .control(op),
+        .control(op_ID_EX),
         .result(alu_out),
         .z_flag(z_flag)
     );
