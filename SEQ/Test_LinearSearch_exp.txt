@@ -1,0 +1,45 @@
+# Linear search in an array of 5 elements
+# x1: Base address of array
+# x2: Value to search for
+# Result: x3 will contain index if found (0-4), or -1 if not found
+
+    # Initialize array at memory location x1
+    # For example, let's store values [10, 25, 15, 30, 5]
+    addi x4, x0, 10      # First element
+    sd x4, 0(x1)
+    addi x4, x0, 25      # Second element
+    sd x4, 1(x1)
+    addi x4, x0, 15      # Third element
+    sd x4, 2(x1)
+    addi x4, x0, 30      # Fourth element
+    sd x4, 3(x1)
+    addi x4, x0, 5       # Fifth element
+    sd x4, 4(x1)
+    
+    # Linear search implementation
+    addi x3, x0, 0       # Initialize index to 0
+    addi x5, x0, 5       # Array length
+    addi x6, x0, 0       # Current address offset
+    
+search_loop:
+    beq x3, x5, not_found  # If index == length, element not found
+    
+    add x7, x1, x6        # Calculate current address
+    ld x8, 0(x7)          # Load current element
+    
+    sub x9, x8, x2        # Compare with search value
+    beq x9, x0, found     # If equal, element found
+    
+    addi x3, x3, 1        # Increment index
+    addi x6, x6, 1      # Increment offset by 8 bytes (64-bit word)
+    beq x0, x0, search_loop  # Loop back
+    
+found:
+    # x3 already contains the index of the found element
+    beq x0, x0, done
+    
+not_found:
+    addi x3, x0, -1       # Set result to -1 (not found)
+    
+done:
+    # Result is in x3
