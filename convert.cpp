@@ -18,8 +18,8 @@ int main() {
     return 0;
 }
 
-// // Converts decimal to hexadecimal
-// // Input: number of test cases, followed by decimal numbers
+// Converts decimal to hexadecimal
+// Input: number of test cases, followed by decimal numbers
 
 // #include <iostream>
 // #include <iomanip>
