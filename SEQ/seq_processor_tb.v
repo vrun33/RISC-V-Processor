@@ -51,7 +51,7 @@ module seq_processor_tb;
             $display("Register Write Enable: %b", uut.reg_write_en);
             $display("Memory Write Enable: %b", uut.mem_write);
             $display("Branch: %b\n", uut.branch);
-            
+            $display("x4: %h\n", uut.register_file_inst.registers[4]);
             // Check for program completion
             if (uut.instr == 32'h00000000) begin
                 $display("\nProgram completed after %0d cycles", i + 1);
