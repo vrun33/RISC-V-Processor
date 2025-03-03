@@ -118,6 +118,21 @@ module seq_processor (
         .z_flag_out(z_flag_EX_MEM)
     );
 
+    MEM_WB mem_wb_inst(
+        .clk(clk),
+        .reset(reset),
+        .data(read_data),
+        .alu_out(alu_out_EX_MEM),
+        .rd(rd_EX_MEM),
+        .mem_to_reg(mem_to_reg_EX_MEM),
+        .reg_write_en(reg_write_en_EX_MEM),
+        .alu_out_out(alu_out_MEM_WB),
+        .data_out(data_MEM_WB),
+        .rd_out(rd_MEM_WB),
+        .mem_to_reg_out(mem_to_reg_MEM_WB),
+        .reg_write_en_out(reg_write_en_MEM_WB)
+    );
+
     pc pc_inst(
         .clk(clk),
         .reset(reset), 
@@ -149,8 +164,8 @@ module seq_processor (
         .read_reg1(instr_IF_ID[19:15]),
         .read_reg2(instr_IF_ID[24:20]),
         .write_reg(instr_IF_ID[11:7]),
-        .write_data(write_data), // Fix it later
-        .reg_write_en(reg_write_en), // Fix it later
+        .write_data(write_data),
+        .reg_write_en(reg_write_en_MEM_WB),
         .read_data1(read_data1),
         .read_data2(read_data2)
     );
@@ -211,9 +226,9 @@ module seq_processor (
     );
 
     mux_2x1 mux_mem(
-        .in1(alu_out), // Fix it later
-        .in2(read_data), // Fix it later
-        .s0(mem_to_reg), // Fix it later
+        .in1(alu_out_MEM_WB),
+        .in2(data_MEM_WB),
+        .s0(mem_to_reg_MEM_WB),
         .y(write_data)
     );
 
