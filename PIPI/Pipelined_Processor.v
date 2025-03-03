@@ -1,4 +1,3 @@
-#TODO
 // Wrapper connecting all the blocks
 
 `include "pc.v"
@@ -14,6 +13,12 @@
 `include "and2.v"
 `include "sl1.v"
 `include "alu.v"
+`include "IF_ID.v"
+`include "ID_EX.v"
+`include "EX_MEM.v"
+`include "MEM_WB.v"
+`include "forwarding_unit.v"
+`include "hazard_unit.v"
 
 module seq_processor (
     input wire clk,
@@ -38,8 +43,21 @@ module seq_processor (
     wire z_flag;
     wire tmp_carry;
     wire tmp_carry_2;
+    wire flush;
+    wire IF_ID_write;
+    wire instr_reg_file;
 
     // Instantiate Hardware
+    // Register files - Output variables have the reg_file suffix    
+    IF_ID if_id_inst(
+        .clk(clk),
+        .reset(reset),
+        .flush(flush),
+        .write(IF_ID_write),
+        .instr_in(instr),
+        .instr_out(instr_reg_file)
+    );
+
     pc pc_inst(
         .clk(clk),
         .reset(reset), 
