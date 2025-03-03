@@ -12,7 +12,7 @@ sd x4, 4(x1)
 addi x3, x0, 0       
 addi x5, x0, 5       
 add x7, x1, x0       
-addi x2, x0, 1818      
+addi x2, x0, 69      
 beq x3, x5, 14     
 ld x8, 0(x7)          
 sub x9, x8, x2        

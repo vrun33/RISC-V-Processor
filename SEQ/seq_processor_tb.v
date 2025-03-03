@@ -40,7 +40,7 @@ module seq_processor_tb;
         // #10;
         
         // Run program for 200 cycles or until halt condition
-        for (i = 0; i < 200; i = i + 1) begin
+        for (i = 0; i < 500; i = i + 1) begin
             @(posedge clk);
             
             // Display current processor state
@@ -50,7 +50,7 @@ module seq_processor_tb;
             $display("ALU Output: %h", uut.alu_out);
             $display("Register Write Enable: %b", uut.reg_write_en);
             $display("Memory Write Enable: %b", uut.mem_write);
-            $display("Branch: %b", uut.branch);
+            $display("Branch: %b\n", uut.branch);
             
             // Check for program completion
             if (uut.instr == 32'h00000000) begin
@@ -104,6 +104,7 @@ module seq_processor_tb;
     
     // Monitor for instruction changes
     always @(uut.instr) begin
+        $display("===============================\n");
         case (uut.instr[6:0])
             7'b0110011: $display("R-type instruction");
             7'b0010011: $display("I-type instruction");
