@@ -7,7 +7,7 @@
 `include "imm_gen.v"
 `include "register_file.v"
 `include "data_memory.v"
-`include "MUX_2x1.v"
+`include "MUX4x1.v"
 `include "CLA_64_BIT.v"
 `include "CLA4BIT.v"
 `include "and2.v"
@@ -54,6 +54,14 @@ module seq_processor (
     wire mem_write_ID_EX;
     wire alu_src_ID_EX;
     wire branch_ID_EX;
+    wire [63:0] alu_out_EX_MEM, data_EX_MEM;
+    wire [4:0] rd_EX_MEM;
+    wire mem_read_EX_MEM, mem_write_EX_MEM, mem_to_reg_EX_MEM, reg_write_en_EX_MEM;
+    wire z_flag_EX_MEM;
+    wire [63:0] alu_out_MEM_WB, data_MEM_WB;
+    wire [4:0] rd_MEM_WB;
+    wire mem_to_reg_MEM_WB, reg_write_en_MEM_WB;
+    wire [63:0] read_data1_mux;
 
     // Instantiate Hardware
     // Register files  
@@ -131,6 +139,24 @@ module seq_processor (
         .rd_out(rd_MEM_WB),
         .mem_to_reg_out(mem_to_reg_MEM_WB),
         .reg_write_en_out(reg_write_en_MEM_WB)
+    );
+
+    mux_4x1 alu_in_1_mux(
+        .in0(read_data1_ID_EX),
+        .in1(write_data),
+        .in2(alu_out_EX_MEM),
+        // .in3(read_data1_ID_EX),
+        .s(forward_A), // 2 Bit Select line from the forwarding unit
+        .y(read_data1_mux)
+    );
+
+    mux_4x1 alu_in_2_mux(
+        .in0(read_data2_ID_EX),
+        .in1(write_data),
+        .in2(alu_out_EX_MEM),
+        // .in3(read_data2_ID_EX),
+        .s(forward_B), // 2 Bit Select line from the forwarding unit
+        .y(alu_in_2)
     );
 
     pc pc_inst(
@@ -233,15 +259,15 @@ module seq_processor (
     );
 
     mux_2x1 mux_reg_alu(
-        .in1(read_data2_ID_EX),
+        .in1(alu_in_2),
         .in2(imm_ID_EX),
         .s0(alu_src_ID_EX),
-        .y(alu_in_2)
+        .y(alu_in_2_mux)
     );
 
     alu alu_inst(
-        .a(read_data1_ID_EX),
-        .b(alu_in_2),
+        .a(read_data1_mux),
+        .b(alu_in_2_mux),
         .control(op_ID_EX),
         .result(alu_out),
         .z_flag(z_flag)
