@@ -109,7 +109,7 @@ module seq_processor (
         .reg_write_en(reg_write_en_ID_EX),
         .z_flag(z_flag),
         .alu_out_out(alu_out_EX_MEM),
-        .data_out(read_data_EX_MEM),
+        .data_out(data_EX_MEM),
         .rd_out(rd_EX_MEM),
         .mem_read_out(mem_read_EX_MEM),
         .mem_write_out(mem_write_EX_MEM),
@@ -163,10 +163,10 @@ module seq_processor (
     data_memory data_memory_inst(
         .clk(clk),
         .reset(reset),
-        .addr(alu_out[9:0]),
-        .write_data(read_data2),
-        .mem_write(mem_write),
-        .mem_read(mem_read),
+        .addr(alu_out_EX_MEM[9:0]), // Fix to 64-bit line
+        .write_data(data_EX_MEM),
+        .mem_write(mem_write_EX_MEM),
+        .mem_read(mem_read_EX_MEM),
         .read_data(read_data)
     );
 
@@ -206,7 +206,7 @@ module seq_processor (
 
     and2 and_inst(
         .in1(branch_ID_EX),
-        .in2(z_flag),
+        .in2(z_flag_EX_MEM),
         .out(and_out)
     );
 
