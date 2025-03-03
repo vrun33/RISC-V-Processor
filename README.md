@@ -39,7 +39,7 @@ The PC is a 64-bit register that stores the address of the current instruction. 
 
 - OUTPUTS: `instr`
 
-This extracts 32-bits corresponding to the instruction indicated by the program counter (PC). Again, READ is always happening. Read happens from the text file containing the instructions. Instructions are constructed from memory in **Little Endian** format.
+This extracts 32-bits corresponding to the instruction indicated by the program counter (PC). Again, READ is always happening. Read happens from the text file containing the instructions. Instructions are constructed from memory in **Big Endian** format.
 
 ## Control Unit
 
@@ -131,4 +131,4 @@ The files `name_exp.txt` contains the instruction with comments for understandin
 
 4) `Test_SumN_exp.txt` contains instructions for adding the first N Natural Numbers (9 instructions)
 
-5) `Test_LinearSearch_exp.txt` contains instructions for Running a Linear search on an array and store the index (9 instructions)
+5) `Test_LinearSearch_exp.txt` contains instructions for Running a Linear search on an array and store the 0-based index (9 instructions)
