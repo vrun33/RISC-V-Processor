@@ -119,19 +119,16 @@ This gives us the final datapath for the sequential processor like in the figure
 
 Instructions supported: and, sub, add, or, ld, sd and beq.
 
-Few Notes:
+# Testing Codes
 
-- `test_program_4.txt` contains instructions for checking arithmetic, logical, sd, ld, beq basic checking (18 instr)
+The files `name_exp.txt` contains the instruction with comments for understanding the code. The files `name_code.txt` contains the executable Byte addressed Hexadecimal Instructions. The code files are generated through the automated python script - `riscv_instruction_encoder.py` and the code file path is included in the `instruction_memory.v` for running that particular code.
 
-- `test_program_5.txt` contains instructions for checking vector addition (34 instructions)
+1) `Test_Basic_Code.txt` contains instructions for checking arithmetic, logical, sd, ld, beq basic checking (18 instr) It also contains the edge case of writing onto register `x0`
 
-- `test_program_5.txt` contains untampered instructions for checking vector addition (34 instructions)
+2) `Test_Vector_Add.txt` contains instructions for checking vector addition (34 instructions)
 
-- Arithmetic and Logical test instructions count: first 8
-(first 32 lines of `test_program_4.txt`)
+3) `Test_Fibonacci_exp.txt` contains instructions for generating first 10 numbers of Fibonacci Series (28 instructions)
 
-- SD and LD test instructions count: next 4
-(lines 33-48 of `test_program_4.txt`)
+4) `Test_SumN_exp.txt` contains instructions for adding the first N Natural Numbers (9 instructions)
 
-- BEQ test instructions count: next 6
-(lines 49-64 of `test_program_4.txt`)
+5) `Test_LinearSearch_exp.txt` contains instructions for Running a Linear search on an array and store the index (9 instructions)
