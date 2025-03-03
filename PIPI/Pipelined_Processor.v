@@ -62,6 +62,7 @@ module seq_processor (
     wire [4:0] rd_MEM_WB;
     wire mem_to_reg_MEM_WB, reg_write_en_MEM_WB;
     wire [63:0] read_data1_mux;
+    wire [63:0] read_data2_mux;
 
     // Instantiate Hardware
     // Register files  
@@ -262,12 +263,12 @@ module seq_processor (
         .in1(alu_in_2),
         .in2(imm_ID_EX),
         .s0(alu_src_ID_EX),
-        .y(alu_in_2_mux)
+        .y(read_data2_mux)
     );
 
     alu alu_inst(
         .a(read_data1_mux),
-        .b(alu_in_2_mux),
+        .b(read_data2_mux),
         .control(op_ID_EX),
         .result(alu_out),
         .z_flag(z_flag)
