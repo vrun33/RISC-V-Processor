@@ -219,17 +219,33 @@ def encode_instruction(instr, operands):
     
     return None, f"Instruction encoding not implemented: {instr}"
 
+def write_executable_format(encoded_instructions, output_file):
+    """
+    Write encoded instructions to a file in the executable format.
+    Each line contains 2 hex digits (8 bits), with most significant byte first.
+    """
+    with open(output_file, 'w') as f:
+        for instruction in encoded_instructions:
+            # Extract each byte and write as 2 hex digits per line
+            for byte_pos in range(3, -1, -1):  # From 3 to 0 (MSB to LSB)
+                byte_val = (instruction >> (byte_pos * 8)) & 0xFF
+                f.write(f"{byte_val:02x}\n")
+
 def main():
     parser = argparse.ArgumentParser(description='Encode RISC-V instructions to hex')
     parser.add_argument('input_file', help='File with RISC-V assembly instructions')
     parser.add_argument('-o', '--output', default='hex_instructions.s', 
                         help='Output file (default: hex_instructions.s)')
+    parser.add_argument('-e', '--executable', default='executable.s',
+                        help='Executable output file (default: executable.s)')
     args = parser.parse_args()
     
     with open(args.input_file, 'r') as f:
         lines = f.readlines()
     
     results = []
+    encoded_instructions = []
+    
     for i, line in enumerate(lines, 1):
         parsed = parse_instruction(line)
         if parsed is None:
@@ -242,13 +258,18 @@ def main():
             results.append(f"Line {i}: {error}")
         else:
             results.append(f"{line.strip():40} # 0x{encoded:08x}")
+            encoded_instructions.append(encoded)
     
     output = '\n'.join(results)
     
-    # Always write to a file (either specified or default)
+    # Write the annotated output
     with open(args.output, 'w') as f:
         f.write(output)
         print(f"Output written to {args.output}")
+    
+    # Write the executable format
+    write_executable_format(encoded_instructions, args.executable)
+    print(f"Executable format written to {args.executable}")
 
 if __name__ == "__main__":
     main()
