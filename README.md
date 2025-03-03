@@ -121,9 +121,9 @@ Instructions supported: and, sub, add, or, ld, sd and beq.
 
 # Testing Codes
 
-The files `name_exp.txt` contains the instruction with comments for understanding the code. The files `name_code.txt` contains the executable Byte addressed Hexadecimal Instructions. The code files are generated through the automated python script - `riscv_instruction_encoder.py` and the code file path is included in the `instruction_memory.v` for running that particular code.
+The files `Name_exp.txt` contains the instruction with comments for understanding the code. The files `Name_Code.txt` contains the executable Byte addressed Hexadecimal Instructions. The code files are generated through the automated python script - `riscv_instruction_encoder.py` and the code file path is included in the `instruction_memory.v` for running that particular code.
 
-1) `Test_Basic_Code.txt` contains instructions for checking arithmetic, logical, sd, ld, beq basic checking (18 instr) It also contains the edge case of writing onto register `x0`
+1) `Test_Basic_exp.txt` contains instructions for checking arithmetic, logical, sd, ld, beq basic checking (18 instr) It also contains the edge case of writing onto register `x0`
 
 2) `Test_Vector_Add.txt` contains instructions for checking vector addition (34 instructions)
 
@@ -132,3 +132,5 @@ The files `name_exp.txt` contains the instruction with comments for understandin
 4) `Test_SumN_exp.txt` contains instructions for adding the first N Natural Numbers (9 instructions)
 
 5) `Test_LinearSearch_exp.txt` contains instructions for Running a Linear search on an array and store the 0-based index (9 instructions)
+
+6) `Test_FaultInstruction_exp.txt` contains instructions similar to `Test_Basic_exp.txt` but with a fault instruction (19 instructions). The output is unaffected by the fault instruction.
