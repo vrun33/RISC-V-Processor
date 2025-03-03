@@ -45,7 +45,7 @@ module seq_processor (
     wire tmp_carry_2;
     wire flush;
     wire IF_ID_write;
-    wire instr_reg_file;
+    wire [31:0] instr_reg_file;
 
     // Instantiate Hardware
     // Register files - Output variables have the reg_file suffix    
@@ -73,7 +73,7 @@ module seq_processor (
     );
 
     control control_inst(
-        .op_code(instr[6:0]),
+        .op_code(instr_reg_file[6:0]),
         .branch(branch),
         .mem_read(mem_read),
         .mem_to_reg(mem_to_reg),
@@ -86,9 +86,9 @@ module seq_processor (
     register_file register_file_inst(
         .clk(clk),
         .reset(reset),
-        .read_reg1(instr[19:15]),
-        .read_reg2(instr[24:20]),
-        .write_reg(instr[11:7]),
+        .read_reg1(instr_reg_file[19:15]),
+        .read_reg2(instr_reg_file[24:20]),
+        .write_reg(instr_reg_file[11:7]),
         .write_data(write_data),
         .reg_write_en(reg_write_en),
         .read_data1(read_data1),
@@ -96,7 +96,7 @@ module seq_processor (
     );
 
     imm_gen imm_gen_inst(
-        .instr(instr),
+        .instr(instr_reg_file),
         .imm(imm)
     );
 
@@ -112,7 +112,7 @@ module seq_processor (
 
     alu_control alu_control_inst(
         .alu_op(alu_op),
-        .instr_bits({instr[30], instr[14:12]}),
+        .instr_bits({instr_reg_file[30], instr_reg_file[14:12]}),
         .op(op)
     );
 
