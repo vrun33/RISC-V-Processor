@@ -46,6 +46,14 @@ module seq_processor (
     wire flush;
     wire IF_ID_write;
     wire [31:0] instr_IF_ID;
+    wire [63:0] read_data1_ID_EX, read_data2_ID_EX;
+    wire [63:0] imm_ID_EX;
+    wire [4:0] rs1_ID_EX, rs2_ID_EX, rd_ID_EX;
+    wire mem_read_ID_EX, mem_to_reg_ID_EX, reg_write_en_ID_EX;
+    wire [3:0] op_ID_EX;
+    wire mem_write_ID_EX;
+    wire alu_src_ID_EX;
+    wire branch_ID_EX;
 
     // Instantiate Hardware
     // Register files  
@@ -87,6 +95,27 @@ module seq_processor (
         .ID_EX_rs2_out(rs2_ID_EX),
         .ID_EX_rd_out(rd_ID_EX),
         .branch_out(branch_ID_EX)
+    );
+
+    EX_MEM ex_mem_inst(
+        .clk(clk),
+        .reset(reset),
+        .alu_out(alu_out),
+        .data(), // Fix it later
+        .rd(rd_ID_EX),
+        .mem_read(mem_read_ID_EX),
+        .mem_write(mem_write_ID_EX),
+        .mem_to_reg(mem_to_reg_ID_EX),
+        .reg_write_en(reg_write_en_ID_EX),
+        .z_flag(z_flag),
+        .alu_out_out(alu_out_EX_MEM),
+        .data_out(read_data_EX_MEM),
+        .rd_out(rd_EX_MEM),
+        .mem_read_out(mem_read_EX_MEM),
+        .mem_write_out(mem_write_EX_MEM),
+        .mem_to_reg_out(mem_to_reg_EX_MEM),
+        .reg_write_en_out(reg_write_en_EX_MEM),
+        .z_flag_out(z_flag_EX_MEM)
     );
 
     pc pc_inst(
