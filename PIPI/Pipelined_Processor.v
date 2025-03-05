@@ -87,13 +87,13 @@ module seq_processor (
         .ID_EX_rs1(instr_IF_ID[19:15]),
         .ID_EX_rs2(instr_IF_ID[24:20]),
         .ID_EX_rd(instr_IF_ID[11:7]),
-        .mem_read(mem_read),
-        .mem_to_reg(mem_to_reg),
-        .reg_write_en(reg_write_en),
+        .branch(branch_out_mux),
+        .mem_read(mem_read_out_mux),
+        .mem_to_reg(mem_to_reg_out_mux),
         .alu_control(op),
-        .mem_write(mem_write),
-        .alu_src(alu_src),
-        .branch(branch),
+        .mem_write(mem_write_out_mux),
+        .alu_src(alu_src_out_mux),
+        .reg_write_en(reg_write_en_out_mux),
         .imm_gen(imm),
         .read_data1(read_data1_ID_EX),
         .read_data2(read_data2_ID_EX),
@@ -178,15 +178,26 @@ module seq_processor (
         .instr(instr)
     );
 
+    // control control_inst(
+    //     .op_code(instr_IF_ID[6:0]),
+    //     .branch(branch_in_mux),
+    //     .mem_read(mem_read_in_mux),
+    //     .mem_to_reg(mem_to_reg_in
+    //     .alu_op(alu_op),
+    //     .mem_write(mem_write),
+    //     .alu_src(alu_src),
+    //     .reg_write_en(reg_write_en)
+    // );
+
     control control_inst(
         .op_code(instr_IF_ID[6:0]),
-        .branch(branch),
-        .mem_read(mem_read),
-        .mem_to_reg(mem_to_reg),
-        .alu_op(alu_op),
-        .mem_write(mem_write),
-        .alu_src(alu_src),
-        .reg_write_en(reg_write_en)
+        .branch(branch_in_mux),
+        .mem_read(mem_read_in_mux),
+        .mem_to_reg(mem_to_reg_in_mux),
+        .alu_op(alu_op_in_mux),
+        .mem_write(mem_write_in_mux),
+        .alu_src(alu_src_in_mux),
+        .reg_write_en(reg_write_en_in_mux)
     );
 
     register_file register_file_inst(
@@ -297,6 +308,24 @@ module seq_processor (
         .pc_write(pc_write),         
         .IF_ID_write(IF_ID_write),    
         .control_mux_sel(control_mux_sel) 
+    );
+
+    control_mux control_mux_inst(
+        .branch(branch_in_mux),
+        .mem_read(mem_read_in_mux),
+        .mem_to_reg(mem_to_reg_in_mux),
+        .alu_op(alu_op_in_mux),
+        .mem_write(mem_write_in_mux),
+        .alu_src(alu_src_in_mux),
+        .reg_write_en(reg_write_en_in_mux),
+        .branch_out(branch_out_mux),
+        .mem_read_out(mem_read_out_mux),
+        .mem_to_reg_out(mem_to_reg_out_mux),
+        .alu_op_out(alu_op_out_mux),
+        .mem_write_out(mem_write_out_mux),
+        .alu_src_out(alu_src_out_mux),
+        .reg_write_en_out(reg_write_en_out_mux),
+        .control_mux_sel(control_mux_sel)
     );
     
 endmodule
