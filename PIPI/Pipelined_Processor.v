@@ -19,6 +19,7 @@
 `include "MEM_WB.v"
 `include "forwarding_unit.v"
 `include "hazard_unit.v"
+`include "control_mux.v"
 
 module seq_processor (
     input wire clk,
@@ -297,5 +298,5 @@ module seq_processor (
         .IF_ID_write(IF_ID_write),    
         .control_mux_sel(control_mux_sel) 
     );
-
+    
 endmodule
