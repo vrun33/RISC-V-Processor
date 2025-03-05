@@ -67,7 +67,7 @@
 // Reads hex values
 module instruction_memory #(
     parameter MEM_SIZE = 4095,
-    parameter MEM_INIT_FILE = "Test_FaultInstruction_Code.txt"
+    parameter MEM_INIT_FILE = "Test_Overflow_code.txt"
 ) (
     input wire clk,
     input wire reset,  // Added reset signal
