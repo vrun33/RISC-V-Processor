@@ -20,7 +20,7 @@ module IF_ID(
             temp <= 32'b0;
         end
         else if (IF_ID_write) begin
-            temp <= instr;
+            temp <= instr_in;
         end
         else
             temp <= temp;
