@@ -50,3 +50,5 @@ module forwarding_unit(
         end
     end
 endmodule
+
+// #TODO : ld followed by stor and vice versa

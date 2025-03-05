@@ -35,7 +35,7 @@ module seq_processor (
     wire [63:0] read_data1, read_data2, write_data;
     wire [63:0] imm;
     wire [63:0] read_data;
-    wire [3:0] op;
+    wire [3:0] op_in_mux;
     wire [63:0] mux_pc_1, mux_pc_2;
     wire [63:0] imm_shifted;
     wire and_out;
@@ -67,6 +67,20 @@ module seq_processor (
     wire forward_A, forward_B;
     wire pc_write;
     wire control_mux_sel;
+    wire branch_in_mux;
+    wire mem_read_in_mux;
+    wire mem_to_reg_in_mux;
+    wire op_in_mux;
+    wire mem_write_in_mux;
+    wire alu_src_in_mux;
+    wire reg_write_en_in_mux;
+    wire branch_out_mux;
+    wire mem_read_out_mux;
+    wire mem_to_reg_out_mux;
+    wire op_out_mux;
+    wire mem_write_out_mux;
+    wire alu_src_out_mux;
+    wire reg_write_en_out_mux;
 
     // Instantiate Hardware
     // Register files  
@@ -90,7 +104,7 @@ module seq_processor (
         .branch(branch_out_mux),
         .mem_read(mem_read_out_mux),
         .mem_to_reg(mem_to_reg_out_mux),
-        .alu_control(op),
+        .alu_control(op_out_mux),
         .mem_write(mem_write_out_mux),
         .alu_src(alu_src_out_mux),
         .reg_write_en(reg_write_en_out_mux),
@@ -194,7 +208,7 @@ module seq_processor (
         .branch(branch_in_mux),
         .mem_read(mem_read_in_mux),
         .mem_to_reg(mem_to_reg_in_mux),
-        .alu_op(alu_op_in_mux),
+        .alu_op(alu_op),
         .mem_write(mem_write_in_mux),
         .alu_src(alu_src_in_mux),
         .reg_write_en(reg_write_en_in_mux)
@@ -230,7 +244,7 @@ module seq_processor (
     alu_control alu_control_inst(
         .alu_op(alu_op),
         .instr_bits({instr_IF_ID[30], instr_IF_ID[14:12]}),
-        .op(op)
+        .op(op_in_mux)
     );
 
     CLA_N_Bit add_pc_inst(
@@ -314,14 +328,14 @@ module seq_processor (
         .branch(branch_in_mux),
         .mem_read(mem_read_in_mux),
         .mem_to_reg(mem_to_reg_in_mux),
-        .alu_op(alu_op_in_mux),
+        .op(op_in_mux),
         .mem_write(mem_write_in_mux),
         .alu_src(alu_src_in_mux),
         .reg_write_en(reg_write_en_in_mux),
         .branch_out(branch_out_mux),
         .mem_read_out(mem_read_out_mux),
         .mem_to_reg_out(mem_to_reg_out_mux),
-        .alu_op_out(alu_op_out_mux),
+        .op_out(op_out_mux),
         .mem_write_out(mem_write_out_mux),
         .alu_src_out(alu_src_out_mux),
         .reg_write_en_out(reg_write_en_out_mux),
