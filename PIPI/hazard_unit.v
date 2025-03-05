@@ -24,7 +24,7 @@ module hazard_unit(
             pc_write = 1'b0;           // dont update PC
             IF_ID_write = 1'b0;        // dont write to IF_ID
             control_mux_sel = 1'b1;    // bubble daalo 
-            // #TODO: Flush the pipeline
+            // #TODO: Flush the pipeline 
         end
     end
 

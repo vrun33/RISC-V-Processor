@@ -128,7 +128,7 @@ module seq_processor (
         .clk(clk),
         .reset(reset),
         .alu_out(alu_out),
-        .data(), // #TODO Fix it later
+        .data(alu_in_2), 
         .rd(rd_ID_EX),
         .mem_read(mem_read_ID_EX),
         .mem_write(mem_write_ID_EX),
