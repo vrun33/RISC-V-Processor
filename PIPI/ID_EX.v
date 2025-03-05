@@ -22,18 +22,18 @@ module ID_EX(
     output wire reg_write_en_out,
     output wire mem_read_out,
     output wire mem_write_out,
-    output wire branch_out
+    output wire branch_out,
     output wire [3:0] alu_control_out,
     output wire alu_src_out,
     output wire [63:0] ID_EX_pc_out,
     output wire [63:0] read_data1,
     output wire [63:0] read_data2,
-    output wire [63:0] imm_gen_out
+    output wire [63:0] imm_gen_out,
     output wire [4:0] ID_EX_rs1_out,
     output wire [4:0] ID_EX_rs2_out,
-    output wire [4:0] ID_EX_rd_out,
+    output wire [4:0] ID_EX_rd_out
 );
-
+    // Registers (reg_input)
     reg [63:0] reg_data_in_1;
     reg [63:0] reg_data_in_2;
     reg [4:0] reg_ID_EX_rs1;
@@ -49,6 +49,7 @@ module ID_EX(
     reg [63:0] imm_gen_reg;
     reg [63:0] ID_EX_pc_reg;
 
+    // Outputs <= Reg
     assign read_data1 = reg_data_in_1;
     assign read_data2 = reg_data_in_2;
     assign ID_EX_rs1_out = reg_ID_EX_rs1;
@@ -64,6 +65,7 @@ module ID_EX(
     assign imm_gen_out = imm_gen_reg;
     assign ID_EX_pc_out = ID_EX_pc_reg;
 
+    // Reg <= Next
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             reg_data_in_1 <= 64'b0;
