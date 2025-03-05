@@ -1,4 +1,4 @@
-// Wrapper connecting all the blocks
+// Pipelined Wrapper connecting all the blocks
 
 `include "pc.v"
 `include "instruction_mem.v"
@@ -63,6 +63,7 @@ module seq_processor (
     wire mem_to_reg_MEM_WB, reg_write_en_MEM_WB;
     wire [63:0] read_data1_mux;
     wire [63:0] read_data2_mux;
+    wire forward_A, forward_B;
 
     // Instantiate Hardware
     // Register files  
@@ -272,6 +273,17 @@ module seq_processor (
         .control(op_ID_EX),
         .result(alu_out),
         .z_flag(z_flag)
+    );
+
+    forwarding_unit forwarding_unit_inst(
+        .ID_EX_rs1(rs1_ID_EX),
+        .ID_EX_rs2(rs2_ID_EX),
+        .EX_MEM_rd(rd_EX_MEM),
+        .EX_MEM_reg_write_en(reg_write_en_EX_MEM),
+        .MEM_WB_rd(rd_MEM_WB),
+        .MEM_WB_reg_write_en(reg_write_en_MEM_WB),
+        .ForwardA(forward_A),
+        .ForwardB(forward_B)
     );
 
 endmodule
