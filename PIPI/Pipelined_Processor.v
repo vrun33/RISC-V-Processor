@@ -64,6 +64,8 @@ module seq_processor (
     wire [63:0] read_data1_mux;
     wire [63:0] read_data2_mux;
     wire forward_A, forward_B;
+    wire pc_write;
+    wire control_mux_sel;
 
     // Instantiate Hardware
     // Register files  
@@ -111,7 +113,7 @@ module seq_processor (
         .clk(clk),
         .reset(reset),
         .alu_out(alu_out),
-        .data(), // Fix it later
+        .data(), // #TODO Fix it later
         .rd(rd_ID_EX),
         .mem_read(mem_read_ID_EX),
         .mem_write(mem_write_ID_EX),
@@ -284,6 +286,16 @@ module seq_processor (
         .MEM_WB_reg_write_en(reg_write_en_MEM_WB),
         .ForwardA(forward_A),
         .ForwardB(forward_B)
+    );
+
+    hazard_unit hazard_unit_inst(
+        .IF_ID_rs1(instr_IF_ID[19:15]),     
+        .IF_ID_rs2(instr_IF_ID[24:20]),     
+        .ID_EX_rd(rd_ID_EX),               
+        .ID_EX_mem_read(mem_read_ID_EX),    
+        .pc_write(pc_write),         
+        .IF_ID_write(IF_ID_write),    
+        .control_mux_sel(control_mux_sel) 
     );
 
 endmodule
