@@ -18,8 +18,8 @@ module control_mux(
     input wire control_mux_sel
 );
 
-    wire input_bus [9:0];
-    wire output_bus [9:0];
+    wire [9:0] input_bus;
+    wire [9:0] output_bus;
 
     assign input_bus[0] = branch;
     assign input_bus[1] = mem_read;
