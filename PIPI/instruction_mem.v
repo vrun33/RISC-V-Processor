@@ -13,7 +13,7 @@ module instruction_memory #(
     
     // File reading variables
     integer file, status, i;
-    integer decimal_value;
+    reg [7:0] hex_value;
     
     // Initialize memory from file
     initial begin
@@ -30,11 +30,9 @@ module instruction_memory #(
         
         i = 0;
         while (!$feof(file) && i < MEM_SIZE) begin
-            status = $fscanf(file, "%d", decimal_value);
-            // Print whatever is read
-            // $display("Read %0d", decimal_value);
-            if (status == 1 && decimal_value >= 0 && decimal_value <= 255) begin
-                mem[i] = decimal_value;
+            status = $fscanf(file, "%h", hex_value); // Changed to %h for hex format
+            if (status == 1) begin
+                mem[i] = hex_value;
                 i = i + 1;
             end
         end
@@ -58,7 +56,7 @@ module instruction_memory #(
     // Read instruction with reset (big-endian)
     always @(*) 
     begin
-        tmp <= {mem[addr+0], mem[addr+1], mem[addr+2], mem[addr+3]};
+        tmp = {mem[addr+0], mem[addr+1], mem[addr+2], mem[addr+3]};
     end
 
 endmodule

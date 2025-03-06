@@ -37,7 +37,7 @@ module pipelined_processor_tb;
         reset = 0;
         
         // Run program for 500 cycles or until halt condition
-        for (i = 0; i < 6; i = i + 1) begin
+        for (i = 0; i < 1000; i = i + 1) begin
             @(posedge clk);
             
             // Display current processor state
@@ -47,47 +47,47 @@ module pipelined_processor_tb;
             $display("Instruction Decoded: %h", uut.instr_IF_ID);
             
             // Pipeline registers
-            // $display("\n--- Pipeline Registers ---");
-            // $display("IF/ID - PC: %h, Instr: %h", uut.IF_ID_pc_out, uut.instr_IF_ID);
-            // $display("ID/EX - PC: %h, RS1: %d, RS2: %d, RD: %d", 
-            //          uut.ID_EX_pc_out, uut.rs1_ID_EX, uut.rs2_ID_EX, uut.rd_ID_EX);
-            // $display("EX/MEM - ALU Result: %h, Branch: %b, Z Flag: %b", 
-            //          uut.alu_out_EX_MEM, uut.branch_EX_MEM, uut.z_flag_EX_MEM);
-            // $display("MEM/WB - ALU Result: %h, Mem Data: %h, RD: %d", 
-            //          uut.alu_out_MEM_WB, uut.data_MEM_WB, uut.rd_MEM_WB);
+            $display("\n--- Pipeline Registers ---");
+            $display("IF/ID - PC: %h, Instr: %h", uut.IF_ID_pc_out, uut.instr_IF_ID);
+            $display("ID/EX - PC: %h, RS1: %d, RS2: %d, RD: %d", 
+                     uut.ID_EX_pc_out, uut.rs1_ID_EX, uut.rs2_ID_EX, uut.rd_ID_EX);
+            $display("EX/MEM - ALU Result: %h, Branch: %b, Z Flag: %b", 
+                     uut.alu_out_EX_MEM, uut.branch_EX_MEM, uut.z_flag_EX_MEM);
+            $display("MEM/WB - ALU Result: %h, Mem Data: %h, RD: %d", 
+                     uut.alu_out_MEM_WB, uut.data_MEM_WB, uut.rd_MEM_WB);
             
-            // // Control signals
-            // $display("\n--- Control Signals ---");
-            // $display("ID Stage - Branch: %b, MemRead: %b, MemToReg: %b, MemWrite: %b, ALUSrc: %b, RegWrite: %b", 
-            //          uut.branch_out_mux, uut.mem_read_out_mux, uut.mem_to_reg_out_mux, 
-            //          uut.mem_write_out_mux, uut.alu_src_out_mux, uut.reg_write_en_out_mux);
-            // $display("EX Stage - Branch: %b, MemRead: %b, MemToReg: %b, MemWrite: %b, ALUSrc: %b, RegWrite: %b", 
-            //          uut.branch_ID_EX, uut.mem_read_ID_EX, uut.mem_to_reg_ID_EX, 
-            //          uut.mem_write_ID_EX, uut.alu_src_ID_EX, uut.reg_write_en_ID_EX);
+            // Control signals
+            $display("\n--- Control Signals ---");
+            $display("ID Stage - Branch: %b, MemRead: %b, MemToReg: %b, MemWrite: %b, ALUSrc: %b, RegWrite: %b", 
+                     uut.branch_out_mux, uut.mem_read_out_mux, uut.mem_to_reg_out_mux, 
+                     uut.mem_write_out_mux, uut.alu_src_out_mux, uut.reg_write_en_out_mux);
+            $display("EX Stage - Branch: %b, MemRead: %b, MemToReg: %b, MemWrite: %b, ALUSrc: %b, RegWrite: %b", 
+                     uut.branch_ID_EX, uut.mem_read_ID_EX, uut.mem_to_reg_ID_EX, 
+                     uut.mem_write_ID_EX, uut.alu_src_ID_EX, uut.reg_write_en_ID_EX);
             
-            // // ALU and forwarding
-            // $display("\n--- Execution ---");
-            // $display("ALU Inputs: A=%h, B=%h", uut.read_data1_mux, uut.read_data2_mux);
-            // $display("ALU Result: %h", uut.alu_out);
-            // $display("Forwarding Unit: ForwardA=%b, ForwardB=%b", uut.forward_A, uut.forward_B);
+            // ALU and forwarding
+            $display("\n--- Execution ---");
+            $display("ALU Inputs: A=%h, B=%h", uut.read_data1_mux, uut.read_data2_mux);
+            $display("ALU Result: %h", uut.alu_out);
+            $display("Forwarding Unit: ForwardA=%b, ForwardB=%b", uut.forward_A, uut.forward_B);
             
-            // // Hazard detection
-            // $display("\n--- Hazard Detection ---");
-            // $display("PC Write: %b, IF/ID Write: %b, Control Mux Sel: %b", 
-            //          uut.pc_write, uut.IF_ID_write, uut.control_mux_sel);
+            // Hazard detection
+            $display("\n--- Hazard Detection ---");
+            $display("PC Write: %b, IF/ID Write: %b, Control Mux Sel: %b", 
+                     uut.pc_write, uut.IF_ID_write, uut.control_mux_sel);
             
             // Display some register contents for verification
-            // $display("\n--- Register Values ---");
-            // $display("x1: %h", uut.register_file_inst.registers[1]);
-            // $display("x2: %h", uut.register_file_inst.registers[2]);
-            // $display("x3: %h", uut.register_file_inst.registers[3]);
-            // $display("x4: %h", uut.register_file_inst.registers[4]);
-            // $display("x5: %h", uut.register_file_inst.registers[5]);
+            $display("\n--- Register Values ---");
+            $display("x1: %h", uut.register_file_inst.registers[1]);
+            $display("x2: %h", uut.register_file_inst.registers[2]);
+            $display("x3: %h", uut.register_file_inst.registers[3]);
+            $display("x4: %h", uut.register_file_inst.registers[4]);
+            $display("x5: %h", uut.register_file_inst.registers[5]);
             
             // Check for program completion
             if (uut.instr == 32'h00000000) begin
                 $display("\nProgram completed after %0d cycles", i + 1);
-                i = 10000;
+                i = 2000;
             end
             
             test_count = test_count + 1;
