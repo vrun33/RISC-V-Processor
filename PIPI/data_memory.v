@@ -37,4 +37,3 @@ module data_memory #(parameter DATA_WIDTH = 64, parameter ADDR_WIDTH = 10) (
         end
     end
 endmodule
-

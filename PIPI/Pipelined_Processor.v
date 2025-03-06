@@ -272,7 +272,8 @@ module seq_processor (
         .out(imm_shifted)
     );
 
-    CLA_N_Bit add_addr_inst(
+    // pc+imm
+    CLA_N_Bit add_pc_imm_inst(
         .In1(imm_shifted),
         .In2(ID_EX_pc_out),
         .Cin(1'b0),
@@ -322,7 +323,8 @@ module seq_processor (
         .out(pc_src)
     );
 
-    CLA_N_Bit add_pc_inst(
+    // pc+4
+    CLA_N_Bit add_pc_next_inst(
         .In1(64'h0000000000000004),
         .In2(pc_out),
         .Cin(1'b0),
