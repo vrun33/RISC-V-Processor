@@ -3,11 +3,11 @@
 module MEM_WB(
     input wire clk,
     input wire reset,
+    input wire mem_to_reg,
+    input wire reg_write_en,
     input wire [63:0] data,
     input wire [63:0] alu_out,
     input wire [4:0] rd,
-    input wire mem_to_reg,
-    input wire reg_write_en,
     output wire [63:0] alu_out_out,
     output wire [63:0] data_out,
     output wire [4:0] rd_out,

@@ -2,6 +2,7 @@
 // Only the alu_out is an expcetion to the naming of inputs(since it contains the output of the ALU)
 // The actual output is alu_out_out
 
+**Consider input of PC_in**
 module EX_MEM(
     input wire clk,
     input wire reset,
@@ -10,6 +11,7 @@ module EX_MEM(
     input wire mem_read,
     input wire mem_write,
     input wire branch,
+    input wire [63:0] pc_next,  
     input wire z_flag,
     input wire [63:0] alu_out,
     input wire [63:0] data,
@@ -19,6 +21,7 @@ module EX_MEM(
     output wire mem_read_out,
     output wire mem_write_out,
     output wire branch_out,
+    output wire [63:0] pc_next_out,
     output wire z_flag_out,
     output wire [63:0] alu_out_out,
     output wire [63:0] data_out,
@@ -34,6 +37,7 @@ module EX_MEM(
     reg mem_write_reg;
     reg z_flag_reg;
     reg branch_reg;
+    reg pc_next_reg;
 
     // Outputs <= Reg
     assign alu_out_out = alu_out_reg;
@@ -45,6 +49,7 @@ module EX_MEM(
     assign mem_write_out = mem_write_reg;
     assign z_flag_out = z_flag_reg;
     assign branch_out = branch_reg;
+    assign pc_next_out = pc_next_reg;
 
     // Reg <= Next(input)
     always @(posedge clk or posedge reset) begin
@@ -58,6 +63,7 @@ module EX_MEM(
             mem_write_reg <= 1'b0;
             z_flag_reg <= 1'b0;
             branch_reg <= 1'b0;
+            pc_next_reg <= 64'b0;
         end else begin
             alu_out_reg <= alu_out;
             data_reg <= data;
@@ -68,6 +74,7 @@ module EX_MEM(
             mem_write_reg <= mem_write;
             z_flag_reg <= z_flag;
             branch_reg <= branch;
+            pc_next_reg <= pc_next;
         end
     end
 
