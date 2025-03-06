@@ -1,6 +1,7 @@
 // Register file with multiple inputs and outputs
 // Inputs include 2 64 bit data lines, 3 5 bit register address lines, 6 Control signals and a 4 bit alu control
 
+// #TODO: Add PC to ID_EX
 module ID_EX(
     input wire clk,
     input wire reset,
