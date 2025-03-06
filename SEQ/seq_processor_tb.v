@@ -2,7 +2,7 @@
 
 `include "seq_processor.v"
 
-module seq_processor_tb;
+module seq_processor_tb;    
     // Testbench signals
     reg clk;
     reg reset;

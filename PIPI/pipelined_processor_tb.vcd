@@ -1,0 +1,219 @@
+$date
+	Thu Mar  6 13:46:57 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module pipelined_processor_tb $end
+$scope module uut $end
+$var wire 64 ! IF_ID_pc_out [63:0] $end
+$var wire 1 " clk $end
+$var wire 1 # flush $end
+$var wire 1 $ reset $end
+$var wire 1 % z_flag_EX_MEM $end
+$var wire 1 & z_flag $end
+$var wire 64 ' write_data [63:0] $end
+$var wire 1 ( tmp_carry_2 $end
+$var wire 1 ) tmp_carry $end
+$var wire 5 * rs2_ID_EX [4:0] $end
+$var wire 5 + rs1_ID_EX [4:0] $end
+$var wire 1 , reg_write_en_out_mux $end
+$var wire 1 - reg_write_en_in_mux $end
+$var wire 1 . reg_write_en_MEM_WB $end
+$var wire 1 / reg_write_en_ID_EX $end
+$var wire 1 0 reg_write_en_EX_MEM $end
+$var wire 64 1 read_data2_mux [63:0] $end
+$var wire 64 2 read_data2_ID_EX [63:0] $end
+$var wire 64 3 read_data2 [63:0] $end
+$var wire 64 4 read_data1_mux [63:0] $end
+$var wire 64 5 read_data1_ID_EX [63:0] $end
+$var wire 64 6 read_data1 [63:0] $end
+$var wire 64 7 read_data [63:0] $end
+$var wire 5 8 rd_MEM_WB [4:0] $end
+$var wire 5 9 rd_ID_EX [4:0] $end
+$var wire 5 : rd_EX_MEM [4:0] $end
+$var wire 1 ; pc_write $end
+$var wire 1 < pc_src $end
+$var wire 64 = pc_out [63:0] $end
+$var wire 64 > pc_next_EX_MEM [63:0] $end
+$var wire 64 ? pc_next [63:0] $end
+$var wire 64 @ pc_in [63:0] $end
+$var wire 4 A op_out_mux [3:0] $end
+$var wire 4 B op_in_mux [3:0] $end
+$var wire 4 C op_ID_EX [3:0] $end
+$var wire 64 D mux_pc_1 [63:0] $end
+$var wire 1 E mem_write_out_mux $end
+$var wire 1 F mem_write_in_mux $end
+$var wire 1 G mem_write_ID_EX $end
+$var wire 1 H mem_write_EX_MEM $end
+$var wire 1 I mem_to_reg_out_mux $end
+$var wire 1 J mem_to_reg_in_mux $end
+$var wire 1 K mem_to_reg_MEM_WB $end
+$var wire 1 L mem_to_reg_ID_EX $end
+$var wire 1 M mem_to_reg_EX_MEM $end
+$var wire 1 N mem_read_out_mux $end
+$var wire 1 O mem_read_in_mux $end
+$var wire 1 P mem_read_ID_EX $end
+$var wire 1 Q mem_read_EX_MEM $end
+$var wire 32 R instr_IF_ID [31:0] $end
+$var wire 32 S instr [31:0] $end
+$var wire 64 T imm_shifted [63:0] $end
+$var wire 64 U imm_ID_EX [63:0] $end
+$var wire 64 V imm [63:0] $end
+$var wire 2 W forward_B [1:0] $end
+$var wire 2 X forward_A [1:0] $end
+$var wire 64 Y data_MEM_WB [63:0] $end
+$var wire 64 Z data_EX_MEM [63:0] $end
+$var wire 1 [ control_mux_sel $end
+$var wire 1 \ branch_out_mux $end
+$var wire 1 ] branch_in_mux $end
+$var wire 1 ^ branch_ID_EX $end
+$var wire 1 _ branch_EX_MEM $end
+$var wire 1 ` alu_src_out_mux $end
+$var wire 1 a alu_src_in_mux $end
+$var wire 1 b alu_src_ID_EX $end
+$var wire 64 c alu_out_MEM_WB [63:0] $end
+$var wire 64 d alu_out_EX_MEM [63:0] $end
+$var wire 64 e alu_out [63:0] $end
+$var wire 2 f alu_op [1:0] $end
+$var wire 64 g alu_in_2 [63:0] $end
+$var wire 1 h IF_ID_write $end
+$var wire 64 i ID_EX_pc_out [63:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 i
+1h
+b0 g
+b0 f
+b0 e
+b0 d
+b0 c
+0b
+0a
+0`
+0_
+0^
+0]
+0\
+0[
+b0 Z
+b0 Y
+b0 X
+b0 W
+b0 V
+b0 U
+b0 T
+b10100000000000100010011 S
+b0 R
+0Q
+0P
+0O
+0N
+0M
+0L
+0K
+0J
+0I
+0H
+0G
+0F
+0E
+b100 D
+b0 C
+b10 B
+b10 A
+b100 @
+b0 ?
+b0 >
+b0 =
+0<
+1;
+b0 :
+b0 9
+b0 8
+b0 7
+b0 6
+b0 5
+b0 4
+b0 3
+b0 2
+b0 1
+00
+0/
+0.
+0-
+0,
+b0 +
+b0 *
+0)
+0(
+b0 '
+1&
+0%
+1$
+z#
+0"
+bz !
+$end
+#2000
+0$
+#5000
+bx ?
+1`
+1,
+b101 V
+1-
+1a
+1%
+bz i
+b10 C
+b10100000000000100010011 R
+1"
+#10000
+0"
+#15000
+x(
+0&
+b101 e
+b1010 T
+b101 1
+b101 U
+1b
+1/
+b10 9
+b101 *
+b0x >
+1"
+#20000
+0"
+#25000
+0%
+10
+b10 :
+b101 d
+1"
+#30000
+0"
+#35000
+b101 '
+1.
+b10 8
+b101 c
+1"
+#40000
+0"
+#45000
+1"
+#50000
+0"
+#55000
+1"
