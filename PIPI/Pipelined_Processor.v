@@ -238,7 +238,7 @@ module pipelined_processor (
         .in0(read_data1_ID_EX),
         .in1(write_data),
         .in2(alu_out_EX_MEM),
-        // .in3(read_data1_ID_EX),
+        .in3(read_data1_ID_EX),
         .s(forward_A), // 2 Bit Select line from the forwarding unit
         .y(read_data1_mux)
     );
@@ -247,7 +247,7 @@ module pipelined_processor (
         .in0(read_data2_ID_EX),
         .in1(write_data),
         .in2(alu_out_EX_MEM),
-        // .in3(read_data2_ID_EX),
+        .in3(read_data2_ID_EX),
         .s(forward_B), // 2 Bit Select line from the forwarding unit
         .y(alu_in_2)
     );
