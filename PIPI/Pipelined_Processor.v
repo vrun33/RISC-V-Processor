@@ -8,7 +8,6 @@
 `include "register_file.v"
 `include "data_memory.v"
 `include "MUX_4x1.v"
-`include "MUX_4x1.v"
 `include "CLA_64_BIT.v"
 `include "CLA4BIT.v"
 `include "and2.v"
