@@ -143,7 +143,7 @@ module pipelined_processor (
         .reset(reset),
         .flush(flush),
         .IF_ID_write(IF_ID_write),
-        .IF_ID_pc_in(pc_in),
+        .IF_ID_pc_in(pc_out),
         .instr_in(instr),
         .IF_ID_pc_out(IF_ID_pc_out),
         .instr_out(instr_IF_ID)
