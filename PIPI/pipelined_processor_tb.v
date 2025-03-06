@@ -78,11 +78,11 @@ module pipelined_processor_tb;
             
             // Display some register contents for verification
             $display("\n--- Register Values ---");
-            $display("x1: %h", uut.register_file_inst.registers[1]);
-            $display("x2: %h", uut.register_file_inst.registers[2]);
+            // $display("x1: %h", uut.register_file_inst.registers[1]);
+            // $display("x2: %h", uut.register_file_inst.registers[2]);
             $display("x3: %h", uut.register_file_inst.registers[3]);
-            $display("x4: %h", uut.register_file_inst.registers[4]);
-            $display("x5: %h", uut.register_file_inst.registers[5]);
+            // $display("x4: %h", uut.register_file_inst.registers[4]);
+            // $display("x5: %h", uut.register_file_inst.registers[5]);
             
             // Check for program completion
             if (uut.instr == 32'h00000000) begin
