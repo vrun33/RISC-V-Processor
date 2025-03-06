@@ -4,14 +4,14 @@
 module ID_EX(
     input wire clk,
     input wire reset,
-    input wire mem_to_reg,
+    input wire mem_to_reg,        // WB
     input wire reg_write_en,
-    input wire mem_read,
+    input wire mem_read,          // MEM
     input wire mem_write,
-    input wire branch,
-    input wire [3:0] alu_control,
+    input wire branch,  
+    input wire [3:0] alu_control, // EX
     input wire alu_src,
-    input wire [63:0] ID_EX_pc_in,
+    input wire [63:0] ID_EX_pc_in, 
     input wire [63:0] data_in_1,
     input wire [63:0] data_in_2,
     input wire [63:0] imm_gen,

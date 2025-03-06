@@ -2,7 +2,6 @@
 // Only the alu_out is an expcetion to the naming of inputs(since it contains the output of the ALU)
 // The actual output is alu_out_out
 
-**Consider input of PC_in**
 module EX_MEM(
     input wire clk,
     input wire reset,
