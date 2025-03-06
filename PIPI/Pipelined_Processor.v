@@ -234,30 +234,30 @@ module seq_processor (
         .ID_EX_rd_out(rd_ID_EX)
     );
 
-    // mux_4x1 alu_in_1_mux(
-    //     .in0(read_data1_ID_EX),
-    //     .in1(write_data),
-    //     .in2(alu_out_EX_MEM),
-    //     // .in3(read_data1_ID_EX),
-    //     .s(forward_A), // 2 Bit Select line from the forwarding unit
-    //     .y(read_data1_mux)
-    // );
+    mux_4x1 alu_in_1_mux(
+        .in0(read_data1_ID_EX),
+        .in1(write_data),
+        .in2(alu_out_EX_MEM),
+        // .in3(read_data1_ID_EX),
+        .s(forward_A), // 2 Bit Select line from the forwarding unit
+        .y(read_data1_mux)
+    );
 
-    // mux_4x1 alu_in_2_mux(
-    //     .in0(read_data2_ID_EX),
-    //     .in1(write_data),
-    //     .in2(alu_out_EX_MEM),
-    //     // .in3(read_data2_ID_EX),
-    //     .s(forward_B), // 2 Bit Select line from the forwarding unit
-    //     .y(alu_in_2)
-    // );
+    mux_4x1 alu_in_2_mux(
+        .in0(read_data2_ID_EX),
+        .in1(write_data),
+        .in2(alu_out_EX_MEM),
+        // .in3(read_data2_ID_EX),
+        .s(forward_B), // 2 Bit Select line from the forwarding unit
+        .y(alu_in_2)
+    );
 
-    // mux_2x1 mux_reg_alu(
-    //     .in1(alu_in_2),
-    //     .in2(imm_ID_EX),
-    //     .s0(alu_src_ID_EX),
-    //     .y(read_data2_mux)
-    // );
+    mux_2x1 mux_reg_alu(
+        .in1(alu_in_2),
+        .in2(imm_ID_EX),
+        .s0(alu_src_ID_EX),
+        .y(read_data2_mux)
+    );
 
     alu alu_inst(
         .a(read_data1_mux),
@@ -329,13 +329,14 @@ module seq_processor (
         .Sum(mux_pc_1),
         .Carry(tmp_carry)
     );
+
     // The mux that selects between the pc+4 and pc+imm
-    // mux_2x1 mux_pc(
-    //     .in1(mux_pc_1),        // comes from pc+4
-    //     .in2(pc_next_EX_MEM),  // comes from EX_MEM
-    //     .s0(pc_src),           // comes from the AND gate
-    //     .y(pc_in)
-    // );
+    mux_2x1 mux_pc(
+        .in1(mux_pc_1),        // comes from pc+4
+        .in2(pc_next_EX_MEM),  // comes from EX_MEM
+        .s0(pc_src),           // comes from the AND gate
+        .y(pc_in)
+    );
 
     pc pc_inst(
         .clk(clk),
@@ -387,11 +388,11 @@ module seq_processor (
     );
 
     // Mux for write back stage
-    // mux_2x1 mux_mem(
-    //     .in1(alu_out_MEM_WB),
-    //     .in2(data_MEM_WB),
-    //     .s0(mem_to_reg_MEM_WB),
-    //     .y(write_data)
-    // );
+    mux_2x1 mux_mem(
+        .in1(alu_out_MEM_WB),
+        .in2(data_MEM_WB),
+        .s0(mem_to_reg_MEM_WB),
+        .y(write_data)
+    );
     
 endmodule
