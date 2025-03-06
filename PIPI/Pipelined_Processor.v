@@ -8,6 +8,7 @@
 `include "register_file.v"
 `include "data_memory.v"
 `include "MUX_4x1.v"
+`include "MUX_4x1.v"
 `include "CLA_64_BIT.v"
 `include "CLA4BIT.v"
 `include "and2.v"
@@ -44,7 +45,7 @@ module seq_processor (
     wire reg_write_en_in_mux;
 
     // alu_control.v
-    wire [3:0] op_in_mux; // 4 bit control signal for ALU going into control_ mux
+    wire [3:0] op_in_mux; // 4 bit control signal for ALU going into control_mux
 
     // control_mux.v, the inputs are from control, alu_control
     // the outputs are going into ID_EX
@@ -77,7 +78,7 @@ module seq_processor (
     wire branch_ID_EX;
         
     // forwarding muxes (3x1)
-    wire forward_A, forward_B;
+    wire [1:0] forward_A, forward_B;
     wire [63:0] read_data1_mux;
     wire [63:0] alu_in_2;  // goes to EX_MEM
 
@@ -134,7 +135,7 @@ module seq_processor (
     wire tmp_carry_2;
     wire pc_write;
     
-    wire op_in_mux;
+    // wire op_in_mux;
     
     // Instantiate Hardware
     // Register files  
@@ -142,7 +143,7 @@ module seq_processor (
         .clk(clk),
         .reset(reset),
         .flush(flush),
-        .write(IF_ID_write),
+        .IF_ID_write(IF_ID_write),
         .IF_ID_pc_in(pc_in),
         .instr_in(instr),
         .IF_ID_pc_out(IF_ID_pc_out),
