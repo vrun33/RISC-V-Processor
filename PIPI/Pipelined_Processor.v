@@ -343,6 +343,7 @@ module pipelined_processor (
         .clk(clk),
         .reset(reset), 
         .pc_in(pc_in), 
+        .pc_write(pc_write),
         .pc_out(pc_out)
     );
 
