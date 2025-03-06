@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-`include "Pipelined_Processor.v"
+`include "pipelined_processor.v"
 
 module pipelined_processor_tb;
     // Testbench signals
