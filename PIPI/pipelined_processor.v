@@ -20,6 +20,7 @@
 `include "forwarding_unit.v"
 `include "hazard_unit.v"
 `include "control_mux.v"
+`include "ld_sd_forwarding_unit.v"
 
 module pipelined_processor (
     input wire clk,
@@ -104,7 +105,7 @@ module pipelined_processor (
     wire z_flag_EX_MEM;
     wire branch_EX_MEM;
     wire [63:0] pc_next_EX_MEM; // goes to mux that selects between pc+4 and pc+imm
-
+    wire [4:0] rs2_EX_MEM;
     // and2.v
     // performs the AND operation between branch and z_flag
 
@@ -136,6 +137,12 @@ module pipelined_processor (
     
     // wire op_in_mux;
     
+    // ld_sd_forwarding_unit.v
+    wire ld_sd_sel;
+
+    // mux_ld_sd
+    wire [63:0] data_mem_in;
+
     // Instantiate Hardware
     // Register files  
     IF_ID if_id_inst(
@@ -304,6 +311,7 @@ module pipelined_processor (
         .z_flag(z_flag),
         .alu_out(alu_out),
         .data(alu_in_2), 
+        .rs2_ID_EX(rs2_ID_EX),
         .rd(rd_ID_EX),
         .mem_to_reg_out(mem_to_reg_EX_MEM),
         .reg_write_en_out(reg_write_en_EX_MEM),
@@ -314,6 +322,7 @@ module pipelined_processor (
         .z_flag_out(z_flag_EX_MEM),
         .alu_out_out(alu_out_EX_MEM),
         .data_out(data_EX_MEM),
+        .rs2_ID_EX_out(rs2_EX_MEM),
         .rd_out(rd_EX_MEM)
     );
 
@@ -358,7 +367,7 @@ module pipelined_processor (
         .clk(clk),
         .reset(reset),
         .addr(alu_out_EX_MEM[9:0]), // Fix to 64-bit line
-        .write_data(data_EX_MEM),
+        .write_data(data_mem_in),
         .mem_write(mem_write_EX_MEM),
         .mem_read(mem_read_EX_MEM),
         .read_data(read_data)
@@ -378,6 +387,14 @@ module pipelined_processor (
         .alu_out_out(alu_out_MEM_WB),
         .rd_out(rd_MEM_WB)
     );
+
+    // wire [4:0] rs1_IF_ID;
+    // wire [4:0] rs2_IF_ID;
+    // wire [4:0] rd_IF_ID;
+
+    // assign rs1_IF_ID = instr_IF_ID[19:15];
+    // assign rs2_IF_ID = instr_IF_ID[24:20];
+    // assign rd_IF_ID = instr_IF_ID[11:7];
 
     hazard_unit hazard_unit_inst(
         .IF_ID_rs1(instr_IF_ID[19:15]),     
@@ -399,4 +416,19 @@ module pipelined_processor (
         .y(write_data)
     );
     
+    // ld_sd_forwarding_unit
+    ld_sd_forward ld_sd_forwarding_unit_inst(
+        .ld_rd(rd_MEM_WB),
+        .sd_rs2_data(rs2_EX_MEM),
+        .ld_sd_mem_to_reg(mem_to_reg_MEM_WB),
+        .ld_sd_mem_write(mem_write_EX_MEM),
+        .ld_sd_sel(ld_sd_sel)
+    );
+
+    mux_2x1 mux_ld_sd(
+        .in1(data_EX_MEM),
+        .in2(data_MEM_WB),
+        .s0(ld_sd_sel),
+        .y(data_mem_in)
+    );
 endmodule

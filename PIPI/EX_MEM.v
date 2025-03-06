@@ -14,6 +14,7 @@ module EX_MEM(
     input wire z_flag,
     input wire [63:0] alu_out,
     input wire [63:0] data,
+    input wire [4:0] rs2_ID_EX,
     input wire [4:0] rd,
     output wire mem_to_reg_out,
     output wire reg_write_en_out,
@@ -24,6 +25,7 @@ module EX_MEM(
     output wire z_flag_out,
     output wire [63:0] alu_out_out,
     output wire [63:0] data_out,
+    output wire [4:0] rs2_ID_EX_out,
     output wire [4:0] rd_out
 );
     // Registers (input_reg)
@@ -37,6 +39,7 @@ module EX_MEM(
     reg z_flag_reg;
     reg branch_reg;
     reg pc_next_reg;
+    reg [4:0] rs2_ID_EX_reg;
 
     // Outputs <= Reg
     assign alu_out_out = alu_out_reg;
@@ -49,6 +52,7 @@ module EX_MEM(
     assign z_flag_out = z_flag_reg;
     assign branch_out = branch_reg;
     assign pc_next_out = pc_next_reg;
+    assign rs2_ID_EX_out = rs2_ID_EX_reg;
 
     // Reg <= Next(input)
     always @(posedge clk or posedge reset) begin
@@ -63,6 +67,7 @@ module EX_MEM(
             z_flag_reg <= 1'b0;
             branch_reg <= 1'b0;
             pc_next_reg <= 64'b0;
+            rs2_ID_EX_reg <= 5'b0;
         end else begin
             alu_out_reg <= alu_out;
             data_reg <= data;
@@ -74,6 +79,7 @@ module EX_MEM(
             z_flag_reg <= z_flag;
             branch_reg <= branch;
             pc_next_reg <= pc_next;
+            rs2_ID_EX_reg <= rs2_ID_EX;
         end
     end
 

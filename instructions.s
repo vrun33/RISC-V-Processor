@@ -12,8 +12,8 @@ ld x8, 0(x7)
 sd x3, 10(x7)
 ld x9, 10(x7)
 ld x10, 10(x7)
-sd x10, 119(x7)
-ld x11, 119(x7)
+sd x10, 14(x7)
+ld x11, 14(x7)
 add x12, x11, x11
 add x0, x0, x0   
 add x0, x0, x0

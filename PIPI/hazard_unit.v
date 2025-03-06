@@ -11,28 +11,28 @@ module hazard_unit(
     output wire IF_ID_write,            
     output wire control_mux_sel         
 );
-    reg reg_pc_write, reg_IF_ID_write, reg_control_mux_sel;
+    // reg reg_pc_write, reg_IF_ID_write, reg_control_mux_sel;
 
-    always @(*) begin
-        // Assume no stall
-        reg_pc_write = 1'b1;
-        reg_IF_ID_write = 1'b1;
-        reg_control_mux_sel = 1'b0;
+    // always @(*) begin
+    //     // Assume no stall
+    //     reg_pc_write = 1'b1;
+    //     reg_IF_ID_write = 1'b1;
+    //     reg_control_mux_sel = 1'b0;
         
-        if (ID_EX_mem_read && 
-            ((ID_EX_rd == IF_ID_rs1) || (ID_EX_rd == IF_ID_rs2)) && 
-            (ID_EX_rd != 5'b0)  && !(ld_sd_mem_write) && !(ld_sd_mem_read)) begin // #TODO Add condition to avoid stall for ld-sd
+    //     // if (ID_EX_mem_read && 
+    //     //     ((ID_EX_rd == IF_ID_rs1) || (ID_EX_rd == IF_ID_rs2)) && 
+    //     //     (ID_EX_rd != 5'b0) && !(ld_sd_mem_read)) begin // #TODO Add condition to avoid stall for ld-sd
             
-            // Stall 
-            reg_pc_write = 1'b0;           // dont update PC
-            reg_IF_ID_write = 1'b0;        // dont write to IF_ID
-            reg_control_mux_sel = 1'b1;    // bubble daalo 
-            // #TODO: Flush the pipeline 
-        end
-    end
+    //     //     // Stall 
+    //     //     reg_pc_write = 1'b0;           // dont update PC
+    //     //     reg_IF_ID_write = 1'b0;        // dont write to IF_ID
+    //     //     reg_control_mux_sel = 1'b1;    // bubble daalo 
+    //     //     // #TODO: Flush the pipeline 
+    //     // end
+    // end
 
-    assign pc_write = reg_pc_write;
-    assign IF_ID_write = reg_IF_ID_write;
-    assign control_mux_sel = reg_control_mux_sel;
+    assign pc_write = 1;
+    assign IF_ID_write = 1;
+    assign control_mux_sel = 0;
 
 endmodule
