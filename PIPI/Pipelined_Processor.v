@@ -131,7 +131,7 @@ module seq_processor (
     wire [4:0] rd_MEM_WB;
     
     wire branch, mem_read, mem_to_reg, mem_write, alu_src, reg_write_en;
-    wire tmp_carry_2;
+    wire tmp_carry_2; // temporary carry in the next PC generation, unused!
     wire pc_write;
     
     // wire op_in_mux;
@@ -343,6 +343,7 @@ module seq_processor (
         .clk(clk),
         .reset(reset), 
         .pc_in(pc_in), 
+        .pc_write(pc_write),
         .pc_out(pc_out)
     );
 
@@ -369,8 +370,8 @@ module seq_processor (
         .mem_to_reg(mem_to_reg_EX_MEM),
         .reg_write_en(reg_write_en_EX_MEM),
         .data(read_data),   // comes from data_memory
-        .alu_out(alu_out_EX_MEM),
-        .rd(rd_EX_MEM),
+        .alu_out(alu_out_EX_MEM), // comes from ALU incase of R-type
+        .rd(rd_EX_MEM),     // For WB of R-type
         .mem_to_reg_out(mem_to_reg_MEM_WB),
         .reg_write_en_out(reg_write_en_MEM_WB),
         .data_out(data_MEM_WB),
