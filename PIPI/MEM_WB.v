@@ -8,11 +8,11 @@ module MEM_WB(
     input wire [63:0] data,
     input wire [63:0] alu_out,
     input wire [4:0] rd,
-    output wire [63:0] alu_out_out,
-    output wire [63:0] data_out,
-    output wire [4:0] rd_out,
     output wire mem_to_reg_out,
     output wire reg_write_en_out
+    output wire [63:0] data_out,
+    output wire [63:0] alu_out_out,
+    output wire [4:0] rd_out,
 );
 
     reg [63:0] alu_out_reg;
