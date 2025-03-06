@@ -189,7 +189,7 @@ module pipelined_processor (
         .reset(reset),
         .read_reg1(instr_IF_ID[19:15]),  // rs1
         .read_reg2(instr_IF_ID[24:20]),  // rs2
-        .write_reg(instr_IF_ID[11:7]),   // rd
+        .write_reg(rd_MEM_WB),   // rd
         .write_data(write_data),
         .reg_write_en(reg_write_en_MEM_WB),
         .read_data1(read_data1),
@@ -383,7 +383,9 @@ module pipelined_processor (
         .IF_ID_rs1(instr_IF_ID[19:15]),     
         .IF_ID_rs2(instr_IF_ID[24:20]),     
         .ID_EX_rd(rd_ID_EX),               
-        .ID_EX_mem_read(mem_read_ID_EX),    
+        .ID_EX_mem_read(mem_read_ID_EX),  
+        .ld_sd_mem_write(mem_write_in_mux),   
+        .ld_sd_mem_read(mem_read_in_mux), 
         .pc_write(pc_write),         
         .IF_ID_write(IF_ID_write),    
         .control_mux_sel(control_mux_sel) 

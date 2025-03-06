@@ -4,7 +4,9 @@ module hazard_unit(
     input wire [4:0] IF_ID_rs1,        
     input wire [4:0] IF_ID_rs2,        
     input wire [4:0] ID_EX_rd,         
-    input wire ID_EX_mem_read,         
+    input wire ID_EX_mem_read,
+    input wire ld_sd_mem_write,   
+    input wire ld_sd_mem_read,       
     output wire pc_write,               
     output wire IF_ID_write,            
     output wire control_mux_sel         
@@ -19,7 +21,7 @@ module hazard_unit(
         
         if (ID_EX_mem_read && 
             ((ID_EX_rd == IF_ID_rs1) || (ID_EX_rd == IF_ID_rs2)) && 
-            (ID_EX_rd != 5'b0)) begin
+            (ID_EX_rd != 5'b0)  && !(ld_sd_mem_write) && !(ld_sd_mem_read)) begin // #TODO Add condition to avoid stall for ld-sd
             
             // Stall 
             reg_pc_write = 1'b0;           // dont update PC

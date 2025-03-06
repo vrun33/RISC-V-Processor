@@ -36,8 +36,8 @@ module pipelined_processor_tb;
         #2;
         reset = 0;
         
-        // Run program for 500 cycles or until halt condition
-        for (i = 0; i < 1000; i = i + 1) begin
+        // Run program for 200 cycles or until halt condition
+        for (i = 0; i < 200; i = i + 1) begin
             @(posedge clk);
             
             // Display current processor state
@@ -85,10 +85,10 @@ module pipelined_processor_tb;
             // $display("x5: %h", uut.register_file_inst.registers[5]);
             
             // Check for program completion
-            if (uut.instr == 32'h00000000) begin
-                $display("\nProgram completed after %0d cycles", i + 1);
-                i = 2000;
-            end
+            // if (uut.instr == 32'h00000000) begin
+            //     $display("\nProgram completed after %0d cycles", i + 1);
+            //     i = 200;
+            // end
             
             test_count = test_count + 1;
         end
