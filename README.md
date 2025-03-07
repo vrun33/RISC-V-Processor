@@ -137,16 +137,16 @@ The files `Name_exp.txt` contains the instruction with comments for understandin
 
 # Pipelined RISC-V Processor in iVerilog
 
-A pipelined processor increases the throughput at the cost of latency, which is a good tradeoff. It is an extension of the sequential processor. We divide the sequenial processor into 5 stages namely the `Instruction Fetch`, `Instruction Decode`, `Execute`, `Memory`, `Write back`. We add register files with appropriate inputs and outputs in between these stages and connect them accordingly. The pipeline registers are added to store the intermediate values between the stages. The pipeline registers are synchronous and are updated at the rising edge of the clock (Except the ID/EX register file). Note that all the registers have a clock and reset as inputs, unless explicitly stated otherwise.
+A pipelined processor increases the throughput at the cost of latency, which is a good tradeoff. It is an extension of the sequential processor. We divide the sequenial processor into 5 stages namely the `Instruction Fetch`, `Instruction Decode`, `Execute`, `Memory`, `Write back`. We add register files with appropriate inputs and outputs in between these stages and connect them accordingly. The pipeline registers are added to store the intermediate values between the stages. The pipeline registers are synchronous and are updated at the rising edge of the clock (_except the register file being written on the negative edge_). Note that all the registers have a clock and reset as inputs, unless explicitly stated otherwise.
 
-## IF/ID Register File
+## IF/ID Register
 
 - INPUTS : 32-bit `instr`, 64-bit `pc_out`
 - OUTPUTS : 32-bit `instr_IF_ID`, 64-bit `IF_ID_pc_out`
 
-The instruction from the instruction memory and the pc value are stored in the IF/ID register file. The instruction is passed to the ID stage and the pc value is passed to the instruction memory to fetch the next instruction.
+The instruction from the instruction memory and the pc value are stored in the IF/ID register file. The instruction is passed to the ID stage and the PC value is passed to the instruction memory to fetch the next instruction.
 
-## ID/EX Register File
+## ID/EX Register 
 
 - INPUTS : 64-bit `IF_ID_pc_out`, 64-bit `read_data1`, 64-bit `read_data2`, 64-bit `imm`, 5-bit `rs1`, 5-bit `rs2`, 5-bit `rd`, 1-bit `reg_write_en_out_mux`, 1-bit `mem_read_out_mux`, 1-bit `mem_to_reg_out_mux`, 1-bit `mem_write_out_mux`, 1-bit `alu_src_out_mux`, 1-bit `reg_write_out_mux`, 4-bit `op_out_mux`, 1-bit `branch_out_mux`
 
@@ -154,17 +154,17 @@ The instruction from the instruction memory and the pc value are stored in the I
 
 The ID/EX register file stores the values of the registers, immediate value, opcode, and control signals. The values are passed to the EX stage.
 
-This register file reads on the NEGATIVE clock edge to ensure that a value that is written back is read in the same clock cycle.
+This register file is written on the **NEGATIVE** clock edge to ensure that a read and write can occur simulatenously in the same clock cycle.
 
-## EX/MEM Register File
+## EX/MEM Register
 
 - INPUTS : 1-bit `mem_to_reg_ID_EX`, 1-bit `reg_write_en_ID_EX`, 1-bit `mem_read_ID_EX`, 1-bit `mem_write_ID_EX`, 1-bit `branch_ID_EX`, 64-bit `pc_next`, 1-bit `z_flag`, 64-bit `alu_out`, 64-bit `alu_in_2`, 5-bit `rs2_ID_EX`, 5-bit `rd_ID_EX`
 
 - OUTPUTS : 1-bit `mem_to_reg_EX_MEM`, 1-bit `reg_write_en_EX_MEM`, 1-bit `mem_read_EX_MEM`, 1-bit `mem_write_EX_MEM`, 1-bit `branch_EX_MEM`, 64-bit `pc_next_EX_MEM`, 1-bit `z_flag_EX_MEM`, 64-bit `alu_out_EX_MEM`, 64-bit `data_EX_MEM`, 5-bit `rs2_EX_MEM`, 5-bit `rd_EX_MEM`
 
-The EX/MEM register file stores the values of the ALU output, data to be written to the memory, and the control signals. The values are passed to the MEM stage. The pc_next value is passed to a mux which selects between the next instruction or the branch instruction at the PC register. The z_flag is passed to the branch unit to determine if the branch should be taken.
+The EX/MEM register file stores the values of the ALU output, the data to be written to the memory, and the control signals. The values are then passed to the MEM stage. The `pc_next` value is passed to a mux which selects between the next instruction or the branch instruction at the PC register. The `z_flag` is passed to the branch unit to determine if the branch should be taken.
 
-## MEM/WB Register File
+## MEM/WB Register
 
 - INPUTS : 1-bit `mem_to_reg_EX_MEM`, 1-bit `reg_write_en_EX_MEM`, 64-bit `data`, 64-bit `alu_out_EX_MEM`, 5-bit `rd_EX_MEM`
 
@@ -174,26 +174,25 @@ The MEM/WB register file stores the values of the ALU output and the data to be 
 
 ## Forwarding Unit
 
-The forwarding unit is essential to handle data hazards. It checks for data hazards and forwards the data to the appropriate stage. The forwarding unit is implemented as a combinational circuit. The cases where we require forwarding are listed below.
+The forwarding unit is essential to handle data hazards. It checks for these hazards and forwards the data to the appropriate stage. The forwarding unit is implemented as a combinational circuit. The cases where we require forwarding are listed below.
 
 1) Data that is used in an operation is being changed in the previous instruction. In this case, we have to forward the value from the EX/MEM register file to the EX stage.
 
-e.g. `add x1, x2, x3` followed by `sub x4, x1, x5`
+- e.g. `add x1, x2, x3` followed by `sub x4, x1, x5`
 
-e.g. `add x1, x2, x3` followed by `sd x1, 0(x4)`
+- e.g. `add x1, x2, x3` followed by `sd x1, 0(x4)`
 
-e.g. `add x1, x2, x3` followed by `sd x4, 0(x1)`
+- e.g. `add x1, x2, x3` followed by `sd x4, 0(x1)`
 
-e.g. `add x1, x2, x3` followed by `ld x4, 0(x1)`
+- e.g. `add x1, x2, x3` followed by `ld x4, 0(x1)`
 
-e.g. `add x1, x2, x3` followed by `beq x1, x4, 0x4`
+- e.g. `add x1, x2, x3` followed by `beq x1, x4, 0x4`
 
 2) Data that is used in an operation is being changed in the previous two instructions. In this case, we have to forward the value from the MEM/WB register file to the EX stage.
 
-e.g. `add x1, x2, x3` followed by `add x4, x5, x6` followed by `sub x6, x1, x7`
+- e.g. `add x1, x2, x3` followed by `add x4, x5, x6` followed by `sub x6, x1, x7`
 
-
-In case of a DOUBLE DATA HAZARD, the priority is given to the EX/MEM register file.
+In case of a **DOUBLE DATA HAZARD**, the priority is given to the EX/MEM register file.
 
 3) We need forwarding from the MEM/WB stage to the MEM stage if we have a load instruction followed by a store instruction.
 
@@ -203,47 +202,51 @@ However, there are few cases where we need to stall the pipeline as well along w
 
 1) Load-Use Hazard : When a load instruction is followed by an instruction that uses the loaded value, we need to stall the pipeline by inserting a bubble in the pipeline.
 
-e.g. `ld x1, 0(x2)` followed by `add x3, x1, x4`
+- e.g. `ld x1, 0(x2)` followed by `add x3, x1, x4`
 
-e.g. `ld x1, 0(x2)` followed by `beq x1, x3, 0x4`
+- e.g. `ld x1, 0(x2)` followed by `beq x1, x3, 0x4`
 
-e.g. `ld x1, 0(x2)` followed by `ld x3, 0(x1)`
+- e.g. `ld x1, 0(x2)` followed by `ld x3, 0(x1)`
 
-e.g. `ld x1, 0(x2)` followed by `sd x4, 0(x1)`
+- e.g. `ld x1, 0(x2)` followed by `sd x4, 0(x1)`
 
-- INPUTS : 5-bit `ID_EX_rs1`, 5-bit `ID_EX_rs2`, 5-bit `EX_MEM_rd`, 1-bit `EX_MEM_reg_write_en`, 5-bit `MEM_WB_rd`, 1-bit `MEM_WB_reg_write_en`
+The inputs and outputs to this unit are as follows.
 
-- OUTPUTS : 2-bit `ForwardA`, 2-bit `ForwardB`
+- Inputs : 5-bit `ID_EX_rs1`, 5-bit `ID_EX_rs2`, 5-bit `EX_MEM_rd`, 1-bit `EX_MEM_reg_write_en`, 5-bit `MEM_WB_rd`, 1-bit `MEM_WB_reg_write_en`
 
-The inputs to the ALU are selected by the forwarding unit. The load store data hazard is handled by another forwarding unit.
+- Outputs : 2-bit `ForwardA`, 2-bit `ForwardB`
 
-- INPUTS : 5-bit `ld_rd`, 64-bit `sd_rs2_data`, 1-bit `ld_sd_mem_to_reg`, 1-bit `ld_sd_mem_write`
+The inputs to the ALU are selected by the forwarding unit outputs `ForwardA` and `ForwardB`. 
 
-- OUTPUTS : 1-bit `ld_sd_sel`
+The load store data hazard is handled by another forwarding unit, whose inputs and outputs are listed below.
 
-The select line is for a mux that selects between the data from the MEM/WB register file and the data from the data memory. The data memory is read in the MEM stage. 
+- Inputs : 5-bit `ld_rd`, 64-bit `sd_rs2_data`, 1-bit `ld_sd_mem_to_reg`, 1-bit `ld_sd_mem_write`
+
+- Outputs : 1-bit `ld_sd_sel`
+
+The select line is for a mux that selects between the data from the MEM/WB register file and the data from the data memory. The data memory is read in the MEM stage.
 
 ## Hazard Detection Unit
 
-The hazard detection unit is essential to handle control hazards. It checks for control hazards and stalls/flushes the pipeline if required. 
+The hazard detection unit is essential to handle control hazards. It checks for control hazards and stalls/flushes the pipeline if required.
 
-The cases where a stall is required is often with forwarding. They are listed in the forwarding sesction. We will discuss the case of a flush here. If the prediction turns out to be wrong, i.e., the branch is taken, we have to flush the pipeline. In this case, we have to reset the pc value to the branch target address and insert bubbles in the pipeline. This is done by flushing the IF/ID and ID/EX register files since they will already have two wrong instructions.
+The cases where a stall is required is often with forwarding. They are listed in the forwarding section. We will discuss the case of a flush here. If the prediction turns out to be wrong, i.e., the branch is taken, we have to flush the pipeline. In this case, we have to reset the pc value to the branch target address and insert bubbles in the pipeline. This is done by flushing the IF/ID and ID/EX register files since they will already have two wrong instructions.
 
 - INPUTS : 5-bit `IF_ID_rs1`, 5-bit `IF_ID_rs2`, 5-bit `ID_EX_rd`, 1-bit `ID_EX_mem_read`, 1-bit `ld_sd_mem_write`, 1-bit `ld_sd_mem_read`
 
 - OUTPUTS : 1-bit `pc_write`, 1-bit `IF_ID_write`, 1-bit `control_mux_sel`
 
-# The Pipelined Processor!
+## The Pipelined Processor
 
 After integrating the blocks with the pipeline registers, we get the final pipelined processor as shown in the figure here!
 
-Instructions supported: addi, and, sub, add, or, ld, sd and beq.
+The instructions supported by this processor, are `addi`, `and`, `sub`, `add`, `or`, `ld`, `sd` and `beq`.
 
-# Testing Codes
+## Testing Codes
 
 The files `Name_exp.txt` contains the instruction with comments for understanding the code. The files `Name_Code.txt` contains the executable Byte addressed Hexadecimal Instructions. The code files are generated through the automated python script - `riscv_instruction_encoder.py` and the code file path is included in the `instruction_memory.v` for running that particular code.
 
-# Idhar se test cases ka description likhna hai smh
+## Description of Test Cases
 
 1) `Test_Basic_exp.txt` contains instructions for checking arithmetic, logical, sd, ld, beq basic checking (18 instr) It also contains the edge case of writing onto register `x0`
 
