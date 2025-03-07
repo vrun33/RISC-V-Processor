@@ -41,7 +41,7 @@ module control_tb;
         input exp_mem_write;
         input exp_alu_src;
         input exp_reg_write_en;
-        input [64:0] test_name;
+        input [128:0] test_name;
         begin
             test_count = test_count + 1;
             

@@ -45,51 +45,62 @@ module imm_gen_TB;
         $dumpfile("imm_gen_TB.vcd");
         $dumpvars(1, uut);
 
+        // 1
         // I-type instruction tests (op-type)
         // ADDI x1, x2, 12
         run_test(32'b0000_0000_1100_0001_0000_0000_1001_0011,
                 64'h000000000000000C);
 
+        //2
         // ADDI x1, x2, -12
         run_test(32'b1111_1111_1100_0001_0000_0000_1001_0011,
                 64'hFFFFFFFFFFFFFFFC);
 
+        //3
         // I-type instruction tests (load-type)
         // LW x1, 16(x2)
         run_test(32'b0000_0001_0000_0001_0010_0000_1000_0011,
                 64'h0000000000000010);
 
+        //4
         // LW x1, -16(x2)
         run_test(32'b1111_1111_0000_0001_0010_0000_1000_0011,
                 64'hFFFFFFFFFFFFFFF0);
 
+        //5
         // S-type instruction tests
         // SW x1, 20(x2)
         run_test(32'b0000_0010_0001_0001_0010_1010_0010_0011,
                 64'h0000000000000034);
 
+        //6
         // SW x1, -20(x2)
         run_test(32'b1111_1110_0001_0001_0010_1110_0010_0011,
                 64'hFFFFFFFFFFFFFFFC);
 
+        //7
         // B-type instruction tests
         // BEQ x1, x2, 16
         run_test(32'b0000_0000_0010_0000_1000_1000_0110_0011,
-                64'h0000000000000008);
+                64'h0000000000000010);
 
+        //8
         // BEQ x1, x2, -16
         run_test(32'b1111_1110_0010_0000_1000_1000_1110_0011,
-                64'hFFFFFFFFFFFFFFF8);
+                64'hFFFFFFFFFFFFFFF0);
 
+        //9
         // Edge cases
         // Maximum positive immediate for I-type
         run_test(32'b0111_1111_1111_0000_0000_0000_0001_0011,
                 64'h00000000000007FF);
 
+        //10
         // Maximum negative immediate for I-type
         run_test(32'b1000_0000_0000_0000_0000_0000_0001_0011,
                 64'hFFFFFFFFFFFFF800);
 
+        //11
         // Invalid opcode test
         run_test(32'b0000_0000_0000_0000_0000_0000_0111_1111,
                 64'h0000000000000000);

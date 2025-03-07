@@ -14,7 +14,7 @@ module data_memory_tb;
     wire [DATA_WIDTH-1:0] read_data;
 
     data_memory #(DATA_WIDTH, ADDR_WIDTH) uut (
-        .clk(clk), .rst(rst), .addr(addr), .write_data(write_data),
+        .clk(clk), .reset(rst), .addr(addr), .write_data(write_data),
         .mem_write(mem_write), .mem_read(mem_read), .read_data(read_data)
     );
 
