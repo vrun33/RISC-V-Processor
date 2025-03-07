@@ -38,7 +38,7 @@ module EX_MEM(
     reg mem_write_reg;
     reg z_flag_reg;
     reg branch_reg;
-    reg pc_next_reg;
+    reg [63:0] pc_next_reg;
     reg [4:0] rs2_ID_EX_reg;
 
     // Outputs <= Reg

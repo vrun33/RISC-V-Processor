@@ -1,0 +1,28 @@
+// Basic arithmetic and logical operations
+00500113    // addi x2, x0, 5          # x2 = 5 (using addi, will convert to add+immediate)
+00A00193    // addi x3, x0, 10         # x3 = 10 (using addi, will convert to add+immediate)
+003100B3    // add x1, x2, x3          # x1 = x2 + x3 = 15
+40310133    // sub x2, x2, x3          # x2 = x2 - x3 = -5
+0031F233    // and x4, x3, x3          # x4 = x3 & x3 = 10 (changed from slt)
+0041F2B3    // and x5, x3, x4          # x5 = x3 & x4 = 10
+00416333    // or x6, x2, x4           # x6 = x2 | x4 = -5 (0xFFFFFFFFFFFFFFFB in 64-bit)
+003163B3    // or x7, x2, x3           # x7 = x2 | x3 = -5 (changed from xor)
+
+// So far,
+x0 = 0
+x1 = 15
+x2 = -5
+x3 = 10
+x4 = 10
+x5 = 10
+x6 = -5
+x7 = -5
+//
+
+// Along with this, We have branch and sd, ld we made in test_program_4.txt
+
+// I'm Adding store load instructions as below
+// Store Load testcase (line 61 onwards)
+sd x13, 0(x4)      // Store a value
+ld x12, 0(x5)
+add x0, x1, x2     // x0 won't change

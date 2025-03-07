@@ -16,25 +16,26 @@ module IF_ID(
     
     // Outputs <= Reg
     assign instr_out = temp;
-    assign pc_out = pc_in_reg;
+    assign IF_ID_pc_out = pc_in_reg;
 
     // Reg <= Next(input)
-    always @(posedge clk or posedge reset) begin
+    always @(posedge clk or posedge reset or flush) begin
         if (reset) begin
             temp <= 32'b0;
             pc_in_reg <= 64'b0;
         end
-        // else if (flush) begin
-        //     temp <= 32'b0;
-        //     pc_in_reg <= IF_ID_pc_in;
-        // end
+        else if (flush) begin
+            temp <= 32'b0;
+            pc_in_reg <= pc_in_reg;
+        end
         else if (IF_ID_write) begin
             temp <= instr_in;
             pc_in_reg <= IF_ID_pc_in;
         end
-        else
+        else begin
             temp <= temp;
             pc_in_reg <= pc_in_reg;
+        end
     end
 
 endmodule

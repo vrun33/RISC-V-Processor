@@ -5,6 +5,7 @@
 module ID_EX(
     input wire clk,
     input wire reset,
+    input wire flush,
     input wire mem_to_reg,        // WB
     input wire reg_write_en,
     input wire mem_read,          // MEM
@@ -67,7 +68,7 @@ module ID_EX(
     assign ID_EX_pc_out = ID_EX_pc_reg;
 
     // Reg <= Next
-    always @(posedge clk or posedge reset) begin
+    always @(posedge clk or posedge reset or flush) begin
         if (reset) begin
             reg_data_in_1 <= 64'b0;
             reg_data_in_2 <= 64'b0;
@@ -83,7 +84,24 @@ module ID_EX(
             branch_reg <= 1'b0;
             imm_gen_reg <= 64'b0;
             ID_EX_pc_reg <= 64'b0;
-        end else begin
+        end 
+        else if(flush) begin
+            reg_data_in_1 <= 64'b0;
+            reg_data_in_2 <= 64'b0;
+            reg_ID_EX_rs1 <= 5'b0;
+            reg_ID_EX_rs2 <= 5'b0;
+            reg_ID_EX_rd <= 5'b0;
+            mem_read_reg <= 1'b0;
+            mem_to_reg_reg <= 1'b0;
+            reg_write_en_reg <= 1'b0;
+            alu_control_reg <= 4'b0;
+            mem_write_reg <= 1'b0;
+            alu_src_reg <= 1'b0;
+            branch_reg <= 1'b0;
+            imm_gen_reg <= 64'b0;
+            ID_EX_pc_reg <= ID_EX_pc_reg;
+        end  
+        else begin
             reg_data_in_1 <= data_in_1;
             reg_data_in_2 <= data_in_2;
             reg_ID_EX_rs1 <= ID_EX_rs1;

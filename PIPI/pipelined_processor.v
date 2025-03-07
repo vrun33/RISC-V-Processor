@@ -211,6 +211,7 @@ module pipelined_processor (
     ID_EX id_ex_inst(
         .clk(clk),
         .reset(reset),
+        .flush(flush),
         .mem_to_reg(mem_to_reg_out_mux),
         .reg_write_en(reg_write_en_out_mux),
         .mem_read(mem_read_out_mux),
@@ -403,9 +404,11 @@ module pipelined_processor (
         .ID_EX_mem_read(mem_read_ID_EX),  
         .ld_sd_mem_write(mem_write_in_mux),   
         .ld_sd_mem_read(mem_read_in_mux), 
+        .pc_src(pc_src),
         .pc_write(pc_write),         
         .IF_ID_write(IF_ID_write),    
-        .control_mux_sel(control_mux_sel) 
+        .control_mux_sel(control_mux_sel),
+        .flush(flush)
     );
 
     // Mux for write back stage
