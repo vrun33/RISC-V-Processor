@@ -134,3 +134,40 @@ The files `Name_exp.txt` contains the instruction with comments for understandin
 5) `Test_LinearSearch_exp.txt` contains instructions for Running a Linear search on an array and store the 0-based index (9 instructions)
 
 6) `Test_FaultInstruction_exp.txt` contains instructions similar to `Test_Basic_exp.txt` but with a fault instruction (19 instructions). The output is unaffected by the fault instruction.
+
+# Pipelined RISC-V Processor in iVerilog
+
+A pipelined processor increases the throughput at the cost of latency, which is a good tradeoff. It is an extension of the sequential processor. We divide the sequenial processor into 5 stages namely the `Instruction Fetch`, `Instruction Decode`, `Execute`, `Memory`, `Write back`. We add register files with appropriate inputs and outputs in between these stages and connect them accordingly. The pipeline registers are added to store the intermediate values between the stages. The pipeline registers are synchronous and are updated at the rising edge of the clock (Except the ID/EX register file). Note that all the registers have a clock and reset as inputs, unless explicitly stated otherwise.
+
+## IF/ID Register File
+
+- INPUTS : 32-bit `instr`, 64-bit `pc_out`
+- OUTPUTS : 32-bit `instr_IF_ID`, 64-bit `IF_ID_pc_out`
+
+The instruction from the instruction memory and the pc value are stored in the IF/ID register file. The instruction is passed to the ID stage and the pc value is passed to the instruction memory to fetch the next instruction.
+
+## ID/EX Register File
+
+- INPUTS : 64-bit `IF_ID_pc_out`, 64-bit `read_data1`, 64-bit `read_data2`, 64-bit `imm`, 5-bit `rs1`, 5-bit `rs2`, 5-bit `rd`, 1-bit `reg_write_en_out_mux`, 1-bit `mem_read_out_mux`, 1-bit `mem_to_reg_out_mux`, 1-bit `mem_write_out_mux`, 1-bit `alu_src_out_mux`, 1-bit `reg_write_out_mux`, 4-bit `op_out_mux`, 1-bit `branch_out_mux`
+
+- OUTPUTS : 64-bit `ID_EX_pc_out`, 64-bit `read_data1_ID_EX`, 64-bit `read_data2_ID_EX`, 64-bit `imm_ID_EX`, 5-bit `rs1_ID_EX`, 5-bit `rs2_ID_EX`, 5-bit `rd_ID_EX`, 1-bit `reg_write_en_ID_EX`, 1-bit `mem_read_ID_EX`, 1-bit `mem_to_reg_ID_EX`, 1-bit `mem_write_ID_EX`, 1-bit `alu_src_ID_EX`, 1-bit `reg_write_ID_EX`, 4-bit `op_ID_EX`, 1-bit `branch_ID_EX`
+
+The ID/EX register file stores the values of the registers, immediate value, opcode, and control signals. The values are passed to the EX stage.
+
+This register file reads on the NEGATIVE clock edge to ensure that a value that is written back is read in the same clock cycle.
+
+## EX/MEM Register File
+
+- INPUTS : 1-bit `mem_to_reg_ID_EX`, 1-bit `reg_write_en_ID_EX`, 1-bit `mem_read_ID_EX`, 1-bit `mem_write_ID_EX`, 1-bit `branch_ID_EX`, 64-bit `pc_next`, 1-bit `z_flag`, 64-bit `alu_out`, 64-bit `alu_in_2`, 5-bit `rs2_ID_EX`, 5-bit `rd_ID_EX`
+
+- OUTPUTS : 1-bit `mem_to_reg_EX_MEM`, 1-bit `reg_write_en_EX_MEM`, 1-bit `mem_read_EX_MEM`, 1-bit `mem_write_EX_MEM`, 1-bit `branch_EX_MEM`, 64-bit `pc_next_EX_MEM`, 1-bit `z_flag_EX_MEM`, 64-bit `alu_out_EX_MEM`, 64-bit `data_EX_MEM`, 5-bit `rs2_EX_MEM`, 5-bit `rd_EX_MEM`
+
+The EX/MEM register file stores the values of the ALU output, data to be written to the memory, and the control signals. The values are passed to the MEM stage. The pc_next value is passed to a mux which selects between the next instruction or the branch instruction at the PC register. The z_flag is passed to the branch unit to determine if the branch should be taken.
+
+## MEM/WB Register File
+
+- INPUTS : 1-bit `mem_to_reg_EX_MEM`, 1-bit `reg_write_en_EX_MEM`, 64-bit `data`, 64-bit `alu_out_EX_MEM`, 5-bit `rd_EX_MEM`
+
+- OUTPUTS : 1-bit `mem_to_reg_MEM_WB`, 1-bit `reg_write_en_MEM_WB`, 64-bit `data_MEM_WB`, 64-bit `alu_out_MEM_WB`, 5-bit `rd_MEM_WB`
+
+The MEM/WB register file stores the values of the ALU output and the data to be written back to the register file. The values are passed to the WB stage.
