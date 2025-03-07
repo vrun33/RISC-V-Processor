@@ -174,7 +174,7 @@ The MEM/WB register file stores the values of the ALU output and the data to be 
 
 ## Forwarding Unit
 
-The forwarding unit is essential to handle control hazards. It checks for data hazards and forwards the data to the appropriate stage. The forwarding unit is implemented as a combinational circuit. The cases where we require forwarding are listed below.
+The forwarding unit is essential to handle data hazards. It checks for data hazards and forwards the data to the appropriate stage. The forwarding unit is implemented as a combinational circuit. The cases where we require forwarding are listed below.
 
 1) Data that is used in an operation is being changed in the previous instruction. In this case, we have to forward the value from the EX/MEM register file to the EX stage.
 
