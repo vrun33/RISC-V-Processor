@@ -1,24 +1,18 @@
-addi x3, x0, 10                          # 0x00a00193
-addi x4, x3, 50                          # 0x03218213
-sub x5, x4, x3                           # 0x403202b3
-and x6, x4, x5                           # 0x00527333
-or x7, x6, x5                            # 0x005363b3
-add x3, x3, x3                           # 0x003181b3
-add x3, x3, x3                           # 0x003181b3
-add x3, x3, x3                           # 0x003181b3
-add x3, x3, x3                           # 0x003181b3
-sd x3, 0(x7)                             # 0x0033b023
-ld x8, 0(x7)                             # 0x0003b403
-sd x3, 10(x7)                            # 0x0033b523
-ld x9, 10(x7)                            # 0x00a3b483
-ld x10, 10(x7)                           # 0x00a3b503
-sd x10, 14(x7)                           # 0x00a3b723
-ld x11, 14(x7)                           # 0x00e3b583
-add x12, x11, x11                        # 0x00b58633
-add x0, x0, x0                           # 0x00000033
-add x0, x0, x0                           # 0x00000033
-add x0, x0, x0                           # 0x00000033
-add x0, x0, x0                           # 0x00000033
-add x0, x0, x0                           # 0x00000033
-add x0, x0, x0                           # 0x00000033
-add x0, x0, x0                           # 0x00000033
+addi x5, x0, 63                          # 0x03f00293
+add x5, x5, x5                           # 0x005282b3
+sub x6, x0, x5                           # 0x40500333
+sd x6, 17(x0)                            # 0x006038a3
+ld x7, 17(x0)                            # 0x01103383
+add x8, x5, x5                           # 0x00528433
+sd x7, 0(x8)                             # 0x00743023
+ld x9, 0(x8)                             # 0x00043483
+addi x10, x0, 17                         # 0x01100513
+add x11, x10, x0                         # 0x000505b3
+ld x12, 0(x11)                           # 0x0005b603
+add x13, x5, x5                          # 0x005286b3
+beq x13, x8, 4                           # 0x00868263
+addi x31, x0, -1                         # 0xfff00f93
+add x14, x13, x13                        # 0x00d68733
+sub x15, x8, x5                          # 0x405407b3
+add x16, x15, x14                        # 0x00e78833
+add x17, x14, x15                        # 0x00f708b3

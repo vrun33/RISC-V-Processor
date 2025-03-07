@@ -13,6 +13,3 @@ add x13, x5, x5
 beq x13, x8, 4
 addi x31, x0, -1
 add x14, x13, x13
-sub x15, x8, x5
-add x16, x15, x14
-add x17, x14, x15

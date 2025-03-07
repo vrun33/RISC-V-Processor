@@ -180,13 +180,13 @@ The forwarding unit is essential to handle control hazards. It checks for data h
 
 e.g. `add x1, x2, x3` followed by `sub x4, x1, x5`
 
-e.g. `add x1, x2, x3` followed by `beq x1, x4, 0x4`
-
 e.g. `add x1, x2, x3` followed by `sd x1, 0(x4)`
 
 e.g. `add x1, x2, x3` followed by `sd x4, 0(x1)`
 
 e.g. `add x1, x2, x3` followed by `ld x4, 0(x1)`
+
+e.g. `add x1, x2, x3` followed by `beq x1, x4, 0x4`
 
 2) Data that is used in an operation is being changed in the previous two instructions. In this case, we have to forward the value from the MEM/WB register file to the EX stage.
 
