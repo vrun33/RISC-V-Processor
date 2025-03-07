@@ -199,8 +199,6 @@ In case of a DOUBLE DATA HAZARD, the priority is given to the EX/MEM register fi
 
 e.g. `ld x1, 0(x2)` followed by `sd x1, 0(x3)`
 
-e.g. `ld x1, 0(x2)` followed by `sd x4, 0(x1)`
-
 However, there are few cases where we need to stall the pipeline as well along with forwarding. They are
 
 1) Load-Use Hazard : When a load instruction is followed by an instruction that uses the loaded value, we need to stall the pipeline by inserting a bubble in the pipeline.
@@ -210,6 +208,8 @@ e.g. `ld x1, 0(x2)` followed by `add x3, x1, x4`
 e.g. `ld x1, 0(x2)` followed by `beq x1, x3, 0x4`
 
 e.g. `ld x1, 0(x2)` followed by `ld x3, 0(x1)`
+
+e.g. `ld x1, 0(x2)` followed by `sd x4, 0(x1)`
 
 - INPUTS : 5-bit `ID_EX_rs1`, 5-bit `ID_EX_rs2`, 5-bit `EX_MEM_rd`, 1-bit `EX_MEM_reg_write_en`, 5-bit `MEM_WB_rd`, 1-bit `MEM_WB_reg_write_en`
 
