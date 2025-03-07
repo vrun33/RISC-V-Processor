@@ -19,14 +19,14 @@ module IF_ID(
     assign IF_ID_pc_out = pc_in_reg;
 
     // Reg <= Next(input)
-    always @(posedge clk or posedge reset or flush) begin
+    always @(posedge clk or posedge reset) begin
         if (reset) begin
             temp <= 32'b0;
             pc_in_reg <= 64'b0;
         end
         else if (flush) begin
             temp <= 32'b0;
-            pc_in_reg <= pc_in_reg;
+            pc_in_reg <= 64'b0;
         end
         else if (IF_ID_write) begin
             temp <= instr_in;

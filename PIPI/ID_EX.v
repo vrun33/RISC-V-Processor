@@ -68,7 +68,7 @@ module ID_EX(
     assign ID_EX_pc_out = ID_EX_pc_reg;
 
     // Reg <= Next
-    always @(posedge clk or posedge reset or flush) begin
+    always @(posedge clk or posedge reset) begin
         if (reset) begin
             reg_data_in_1 <= 64'b0;
             reg_data_in_2 <= 64'b0;
@@ -99,7 +99,7 @@ module ID_EX(
             alu_src_reg <= 1'b0;
             branch_reg <= 1'b0;
             imm_gen_reg <= 64'b0;
-            ID_EX_pc_reg <= ID_EX_pc_reg;
+            ID_EX_pc_reg <= 64'b0;
         end  
         else begin
             reg_data_in_1 <= data_in_1;

@@ -308,8 +308,6 @@ module pipelined_processor (
         .mem_read(mem_read_ID_EX),
         .mem_write(mem_write_ID_EX),
         .branch(branch_ID_EX),
-        .pc_next(pc_next),
-        .z_flag(z_flag),
         .alu_out(alu_out),
         .data(alu_in_2), 
         .rs2_ID_EX(rs2_ID_EX),
@@ -319,8 +317,6 @@ module pipelined_processor (
         .mem_read_out(mem_read_EX_MEM),
         .mem_write_out(mem_write_EX_MEM),
         .branch_out(branch_EX_MEM),
-        .pc_next_out(pc_next_EX_MEM),
-        .z_flag_out(z_flag_EX_MEM),
         .alu_out_out(alu_out_EX_MEM),
         .data_out(data_EX_MEM),
         .rs2_ID_EX_out(rs2_EX_MEM),
@@ -328,8 +324,8 @@ module pipelined_processor (
     );
 
     and2 and_inst(
-        .in1(branch_EX_MEM),   // both inputs come from EX_MEM
-        .in2(z_flag_EX_MEM),
+        .in1(branch_ID_EX),   // both inputs come from EX_MEM
+        .in2(z_flag),
         .out(pc_src)
     );
 
@@ -344,7 +340,7 @@ module pipelined_processor (
     // The mux that selects between the pc+4 and pc+imm
     mux_2x1 mux_pc(
         .in1(mux_pc_1),        // comes from pc+4
-        .in2(pc_next_EX_MEM),  // comes from EX_MEM
+        .in2(pc_next),  // comes from EX_MEM
         .s0(pc_src),           // comes from the AND gate
         .y(pc_in)
     );
