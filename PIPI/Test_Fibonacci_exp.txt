@@ -1,0 +1,33 @@
+Fibonacci
+// Calculate first n Fibonacci numbers
+    addi x1, x0, 10       // Calculate 8 Fibonacci numbers
+    addi x2, x0, 0        // Address for storing results
+    addi x3, x0, 0        // Fib(0) = 0
+    addi x4, x0, 1        // Fib(1) = 1
+    sd x3, 0(x2)          // Store Fib(0)
+    addi x2, x2, 1        // Increment address (changed from 8)
+    sd x4, 0(x2)          // Store Fib(1)
+    addi x2, x2, 1        // Increment address (changed from 8)
+    addi x5, x0, 2        // i = 2
+fib_loop:
+    beq x5, x1, 16        // If i==n, done
+    add x6, x3, x4    	  // Calculate next Fibonacci number
+    sd x6, 0(x2)          // Store result
+    
+    addi x2, x2, 1        // Increment address (changed from 8)
+    addi x5, x5, 1        // i++
+    add x3, x0, x4        // a = b
+    add x4, x0, x6        // b = result
+    beq x0, x0, -14       // Loop back
+fib_done:
+    add x2, x0, x0        //iterating address for loading
+    ld x10, 0(x2)         //put the series onto the registers (x10-x19)
+    ld x11, 1(x2)
+    ld x12, 2(x2)
+    ld x13, 3(x2)
+    ld x14, 4(x2)
+    ld x15, 5(x2)
+    ld x16, 6(x2)
+    ld x17, 7(x2)
+    ld x18, 8(x2)
+    ld x19, 9(x2)

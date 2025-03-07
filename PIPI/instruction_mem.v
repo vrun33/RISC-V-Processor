@@ -1,6 +1,6 @@
 module instruction_memory #(
     parameter MEM_SIZE = 4095,
-    parameter MEM_INIT_FILE = "Test_Sum_Numbers.txt"
+    parameter MEM_INIT_FILE = "Test_Linear_Search.txt"
     // parameter MEM_INIT_FILE = "imemory.txt"
 ) (
     input wire clk,
