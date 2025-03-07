@@ -117,7 +117,7 @@ The adder blocks are instantiations of the carry look-ahead adder, which is used
 
 This gives us the final datapath for the sequential processor like in the figure at the top!
 
-Instructions supported: and, sub, add, or, ld, sd and beq.
+Instructions supported: addi, and, sub, add, or, ld, sd and beq.
 
 # Testing Codes
 
@@ -184,7 +184,9 @@ e.g. `add x1, x2, x3` followed by `beq x1, x4, 0x4`
 
 e.g. `add x1, x2, x3` followed by `sd x1, 0(x4)`
 
-e.g. `add x1, x2, x3` followed by `ld x1, 0(x4)`
+e.g. `add x1, x2, x3` followed by `sd x4, 0(x1)`
+
+e.g. `add x1, x2, x3` followed by `ld x4, 0(x1)`
 
 2) Data that is used in an operation is being changed in the previous two instructions. In this case, we have to forward the value from the MEM/WB register file to the EX stage.
 
@@ -197,6 +199,8 @@ In case of a DOUBLE DATA HAZARD, the priority is given to the EX/MEM register fi
 
 e.g. `ld x1, 0(x2)` followed by `sd x1, 0(x3)`
 
+e.g. `ld x1, 0(x2)` followed by `sd x4, 0(x1)`
+
 However, there are few cases where we need to stall the pipeline as well along with forwarding. They are
 
 1) Load-Use Hazard : When a load instruction is followed by an instruction that uses the loaded value, we need to stall the pipeline by inserting a bubble in the pipeline.
@@ -205,12 +209,50 @@ e.g. `ld x1, 0(x2)` followed by `add x3, x1, x4`
 
 e.g. `ld x1, 0(x2)` followed by `beq x1, x3, 0x4`
 
-2) Branch Hazard : When a branch instruction is followed by an instruction that changes the PC value, we need to stall the pipeline by inserting a bubble in the pipeline.
+e.g. `ld x1, 0(x2)` followed by `ld x3, 0(x1)`
 
-e.g. `beq x1, x2, 0x4` followed by `add x3, x4, x5`
+- INPUTS : 5-bit `ID_EX_rs1`, 5-bit `ID_EX_rs2`, 5-bit `EX_MEM_rd`, 1-bit `EX_MEM_reg_write_en`, 5-bit `MEM_WB_rd`, 1-bit `MEM_WB_reg_write_en`
 
-3) Use-data followed by register access : When a register is manipulated and is used as the base address for a load/store instruction, we need to stall the pipeline by inserting a bubble in the pipeline.
+- OUTPUTS : 2-bit `ForwardA`, 2-bit `ForwardB`
 
-e.g. `add x1, x2, x3` followed by `sd x4, 0(x1)`
+The inputs to the ALU are selected by the forwarding unit. The load store data hazard is handled by another forwarding unit.
 
-e.g. `add x1, x2, x3` followed by `ld x4, 0(x1)`
+- INPUTS : 5-bit `ld_rd`, 64-bit `sd_rs2_data`, 1-bit `ld_sd_mem_to_reg`, 1-bit `ld_sd_mem_write`
+
+- OUTPUTS : 1-bit `ld_sd_sel`
+
+The select line is for a mux that selects between the data from the MEM/WB register file and the data from the data memory. The data memory is read in the MEM stage. 
+
+## Hazard Detection Unit
+
+The hazard detection unit is essential to handle control hazards. It checks for control hazards and stalls/flushes the pipeline if required. 
+
+The cases where a stall is required is often with forwarding. They are listed in the forwarding sesction. We will discuss the case of a flush here. If the prediction turns out to be wrong, i.e., the branch is taken, we have to flush the pipeline. In this case, we have to reset the pc value to the branch target address and insert bubbles in the pipeline. This is done by flushing the IF/ID and ID/EX register files since they will already have two wrong instructions.
+
+- INPUTS : 5-bit `IF_ID_rs1`, 5-bit `IF_ID_rs2`, 5-bit `ID_EX_rd`, 1-bit `ID_EX_mem_read`, 1-bit `ld_sd_mem_write`, 1-bit `ld_sd_mem_read`
+
+- OUTPUTS : 1-bit `pc_write`, 1-bit `IF_ID_write`, 1-bit `control_mux_sel`
+
+# The Pipelined Processor!
+
+After integrating the blocks with the pipeline registers, we get the final pipelined processor as shown in the figure here!
+
+Instructions supported: addi, and, sub, add, or, ld, sd and beq.
+
+# Testing Codes
+
+The files `Name_exp.txt` contains the instruction with comments for understanding the code. The files `Name_Code.txt` contains the executable Byte addressed Hexadecimal Instructions. The code files are generated through the automated python script - `riscv_instruction_encoder.py` and the code file path is included in the `instruction_memory.v` for running that particular code.
+
+# Idhar se test cases ka description likhna hai smh
+
+1) `Test_Basic_exp.txt` contains instructions for checking arithmetic, logical, sd, ld, beq basic checking (18 instr) It also contains the edge case of writing onto register `x0`
+
+2) `Test_Vector_Add.txt` contains instructions for checking vector addition (34 instructions)
+
+3) `Test_Fibonacci_exp.txt` contains instructions for generating first 10 numbers of Fibonacci Series (28 instructions)
+
+4) `Test_SumN_exp.txt` contains instructions for adding the first N Natural Numbers (9 instructions)
+
+5) `Test_LinearSearch_exp.txt` contains instructions for Running a Linear search on an array and store the 0-based index (9 instructions)
+
+6) `Test_FaultInstruction_exp.txt` contains instructions similar to `Test_Basic_exp.txt` but with a fault instruction (19 instructions). The output is unaffected by the fault instruction.
