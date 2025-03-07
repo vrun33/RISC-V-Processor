@@ -171,3 +171,46 @@ The EX/MEM register file stores the values of the ALU output, data to be written
 - OUTPUTS : 1-bit `mem_to_reg_MEM_WB`, 1-bit `reg_write_en_MEM_WB`, 64-bit `data_MEM_WB`, 64-bit `alu_out_MEM_WB`, 5-bit `rd_MEM_WB`
 
 The MEM/WB register file stores the values of the ALU output and the data to be written back to the register file. The values are passed to the WB stage.
+
+## Forwarding Unit
+
+The forwarding unit is essential to handle control hazards. It checks for data hazards and forwards the data to the appropriate stage. The forwarding unit is implemented as a combinational circuit. The cases where we require forwarding are listed below.
+
+1) Data that is used in an operation is being changed in the previous instruction. In this case, we have to forward the value from the EX/MEM register file to the EX stage.
+
+e.g. `add x1, x2, x3` followed by `sub x4, x1, x5`
+
+e.g. `add x1, x2, x3` followed by `beq x1, x4, 0x4`
+
+e.g. `add x1, x2, x3` followed by `sd x1, 0(x4)`
+
+e.g. `add x1, x2, x3` followed by `ld x1, 0(x4)`
+
+2) Data that is used in an operation is being changed in the previous two instructions. In this case, we have to forward the value from the MEM/WB register file to the EX stage.
+
+e.g. `add x1, x2, x3` followed by `add x4, x5, x6` followed by `sub x6, x1, x7`
+
+
+In case of a DOUBLE DATA HAZARD, the priority is given to the EX/MEM register file.
+
+3) We need forwarding from the MEM/WB stage to the MEM stage if we have a load instruction followed by a store instruction.
+
+e.g. `ld x1, 0(x2)` followed by `sd x1, 0(x3)`
+
+However, there are few cases where we need to stall the pipeline as well along with forwarding. They are
+
+1) Load-Use Hazard : When a load instruction is followed by an instruction that uses the loaded value, we need to stall the pipeline by inserting a bubble in the pipeline.
+
+e.g. `ld x1, 0(x2)` followed by `add x3, x1, x4`
+
+e.g. `ld x1, 0(x2)` followed by `beq x1, x3, 0x4`
+
+2) Branch Hazard : When a branch instruction is followed by an instruction that changes the PC value, we need to stall the pipeline by inserting a bubble in the pipeline.
+
+e.g. `beq x1, x2, 0x4` followed by `add x3, x4, x5`
+
+3) Use-data followed by register access : When a register is manipulated and is used as the base address for a load/store instruction, we need to stall the pipeline by inserting a bubble in the pipeline.
+
+e.g. `add x1, x2, x3` followed by `sd x4, 0(x1)`
+
+e.g. `add x1, x2, x3` followed by `ld x4, 0(x1)`
