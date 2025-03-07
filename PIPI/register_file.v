@@ -25,7 +25,7 @@ module register_file (
     assign read_data2 = registers[read_reg2];
 
     // Write data to registers or reset all registers
-    always @(posedge clk or posedge reset) begin
+    always @(negedge clk or posedge reset) begin
         if (reset) begin
             // Reset all registers to 0
             for (i = 0; i < 32; i = i + 1) begin

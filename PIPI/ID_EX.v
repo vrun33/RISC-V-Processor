@@ -67,7 +67,7 @@ module ID_EX(
     assign ID_EX_pc_out = ID_EX_pc_reg;
 
     // Reg <= Next
-    always @(negedge clk or posedge reset) begin
+    always @(posedge clk or posedge reset) begin
         if (reset) begin
             reg_data_in_1 <= 64'b0;
             reg_data_in_2 <= 64'b0;

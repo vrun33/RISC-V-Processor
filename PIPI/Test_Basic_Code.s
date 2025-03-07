@@ -15,10 +15,3 @@ ld x10, 10(x7)
 sd x10, 14(x7)
 ld x11, 14(x7)
 add x12, x11, x11
-add x0, x0, x0   
-add x0, x0, x0
-add x0, x0, x0
-add x0, x0, x0
-add x0, x0, x0
-add x0, x0, x0
-add x0, x0, x0

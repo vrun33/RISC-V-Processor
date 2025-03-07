@@ -41,7 +41,8 @@ module pipelined_processor_tb;
             @(posedge clk);
             
             // Display current processor state
-            $display("\nCycle %0d:", i + 1);
+            // print the clock cycle number and the current time in brackets
+            $display("\n=== Processor State at Cycle %0d (%t) ===", i, $realtime);
             $display("PC: %h", uut.pc_out);
             $display("Instruction Fetched: %h", uut.instr);
             $display("Instruction Decoded: %h", uut.instr_IF_ID);
