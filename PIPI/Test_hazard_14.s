@@ -41,7 +41,3 @@ add x31, x30, x30
 add x0, x0, x0
 add x0, x0, x0
 add x1, x31, x0
-ld x2, 1(x0)
-add x0, x0, x0
-add x0, x0, x0
-add x3, x2, x0
