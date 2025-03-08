@@ -26,3 +26,8 @@ sd x10, 1(x0)
 ld x22, 1(x0)
 sd x21, 1(x22)
 ld x23, 1(x22)
+ld x24, 121(x11)
+sub x25, x0, x24
+ld x26, 1(x0)
+beq x10, x26, 4
+sub x31, x0, x15

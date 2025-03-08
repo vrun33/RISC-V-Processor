@@ -202,13 +202,13 @@ However, there are few cases where we need to stall the pipeline as well along w
 
 1) Load-Use Hazard : When a load instruction is followed by an instruction that uses the loaded value, we need to stall the pipeline by inserting a bubble in the pipeline.
 
+- e.g. `ld x1, 0(x2)` followed by `sd x4, 0(x1)`
+
 - e.g. `ld x1, 0(x2)` followed by `add x3, x1, x4`
 
 - e.g. `ld x1, 0(x2)` followed by `beq x1, x3, 0x4`
 
 - e.g. `ld x1, 0(x2)` followed by `ld x3, 0(x1)`
-
-- e.g. `ld x1, 0(x2)` followed by `sd x4, 0(x1)`
 
 The inputs and outputs to this unit are as follows.
 
