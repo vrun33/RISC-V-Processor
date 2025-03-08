@@ -240,6 +240,8 @@ The cases where a stall is required is often with forwarding. They are listed in
 
 After integrating the blocks with the pipeline registers, we get the final pipelined processor as shown in the figure here!
 
+![Pipelined Processor](PipelinedProcessor.png)
+
 The instructions supported by this processor, are `addi`, `and`, `sub`, `add`, `or`, `ld`, `sd` and `beq`.
 
 ## Testing Codes
