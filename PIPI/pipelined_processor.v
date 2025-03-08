@@ -102,9 +102,7 @@ module pipelined_processor (
     wire mem_read_EX_MEM, mem_write_EX_MEM, mem_to_reg_EX_MEM, reg_write_en_EX_MEM;
     wire [63:0] alu_out_EX_MEM, data_EX_MEM;
     wire [4:0] rd_EX_MEM;
-    wire z_flag_EX_MEM;
     wire branch_EX_MEM;
-    wire [63:0] pc_next_EX_MEM; // goes to mux that selects between pc+4 and pc+imm
     wire [4:0] rs2_EX_MEM;
     // and2.v
     // performs the AND operation between branch and z_flag
