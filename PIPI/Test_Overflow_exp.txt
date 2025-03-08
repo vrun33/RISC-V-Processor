@@ -1,0 +1,15 @@
+Overflow
+// Check for overflow condition
+    addi x1, x0, 1024
+    addi x3, x0, 55
+loop:
+    beq x3, x0, 10        // If i==n, done (exit)
+    add x4, x1, x1    	  // Calculate next Fibonacci number
+    add x1, x4, x0        // Store result
+    addi x3, x3, -1
+    beq x0, x0, -8       // Unconditional for looping
+Exit:
+    add x0, x0, x0        
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0      // 4 dummy instructions to exit
