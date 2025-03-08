@@ -37,10 +37,10 @@ addi x29, x10, 1                         # 0x00150e93
 add x0, x0, x0                           # 0x00000033
 ld x30, 0(x29)                           # 0x000ebf03
 add x0, x0, x0                           # 0x00000033
-add x31, x30, x30                        # 0x01ef0fb3
+add x4, x30, x30                         # 0x01ef0233
 add x0, x0, x0                           # 0x00000033
 add x0, x0, x0                           # 0x00000033
-add x1, x31, x0                          # 0x000f80b3
+add x1, x4, x0                           # 0x000200b3
 ld x2, 1(x0)                             # 0x00103103
 add x0, x0, x0                           # 0x00000033
 add x0, x0, x0                           # 0x00000033

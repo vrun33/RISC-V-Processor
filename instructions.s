@@ -37,10 +37,10 @@ addi x29, x10, 1
 add x0, x0, x0
 ld x30, 0(x29)
 add x0, x0, x0
-add x31, x30, x30
+add x4, x30, x30
 add x0, x0, x0
 add x0, x0, x0
-add x1, x31, x0
+add x1, x4, x0
 ld x2, 1(x0)
 add x0, x0, x0
 add x0, x0, x0

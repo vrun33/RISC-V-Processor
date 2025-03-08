@@ -1,0 +1,106 @@
+Test_hazard_1 : Tests Forward from EX/MEM to EX
+    addi x5, x0, 63
+    add x5, x5, x5
+    sub x6, x0, x5
+
+    Result : x5 = 126(7E), x6 = -126(FF82)
+
+Test_hazard_2 : Tests Store and Load, Not a Hazard
+    sd x6, 17(x0)
+    ld x7, 17(x0)
+
+    Result : x7 = -126(FF82), data_mem[17] = -126(FF82)
+
+Test_hazard_3 : Not a hazard, just a test for store and load
+    add x8, x5, x5
+    sd x7, 0(x8)
+    ld x9, 0(x8)
+
+    Result : x8 = 252(FC), x9 = -126(FF82), data_mem[252] = -126(FF82)
+
+Test_hazard_4 : Tests Forward from EX/MEM to EX
+    addi x10, x0, 17
+    add x11, x10, x0
+    ld x12, 0(x11)
+
+    Result : x10 = 17(11), x11 = 17(11), x12 = -126(FF82)
+
+Test_hazard_5 : Tests Flush
+    add x13, x5, x5
+    beq x13, x8, 4
+    addi x31, x0, -1
+    add x14, x13, x13
+
+    Result : x13 = 252(FC), x14 = 504(1F8), x31 should remain 0
+
+Test_hazard_6 : Tests Forward Primacy, Double Data Hazards
+    sub x15, x8, x5
+    add x16, x15, x14
+    add x17, x14, x15
+    add x18, x16, x17
+    add x18, x18, x17
+    add x19, x18, x0
+
+    Result : x15 = 126(7E), x16 = 630(276), x17 = 630(276), x18 = 1890(762), x19 = 1890(762)
+
+Test_hazard_7 : Forward from MEM/WB to MEM for one type of ld-sd hazard
+    ld x20, 0(x11)
+    sd x20, 121(x11)
+    ld x21, 121(x11)
+
+    Result : x20 = -126(FF82), x21 = -126(FF82), data_mem[138] = -126(FF82)
+
+Test_hazard_8 : Stall and Forward from MEM/WB to EX
+    sd x10, 1(x0)
+    ld x22, 1(x0)
+    sd x21, 1(x22)
+    ld x23, 1(x22)
+
+    Result : x22 = 17(11), x23 = -126(FF82), data_mem[1] = 17(11), data_mem[18] = -126(FF82)
+
+Test_hazard_9 : Stall to solve Load Use Data Hazard
+    ld x24, 121(x11)
+    sub x25, x0, x24
+
+    Result : x24 = -126(FF82), x25 = 126(7E)
+
+Test_hazard_10 : Stall to solve Load Use Data Hazard and Flush to solve Branch Hazard
+    ld x26, 1(x0)
+    beq x10, x26, 4
+    sub x31, x0, x15
+
+    Result : x26 = 17(11), x31 should remain 0
+
+Test_hazard_11 : Stall and Forward from MEM/WB to EX
+    ld x27, 1(x0)
+    ld x28, 1(x27)
+
+    Result : x27 = 17(11), x28 = -126(FF82)
+
+Test_hazard_12 : Forward from MEM/WB to EX
+    addi x29, x10, 1
+    add x0, x0, x0
+    ld x30, 0(x29)
+
+    Result : x29 = 18(12), x30 = -126(FF82)
+
+Test_hazard_13 : Forward from MEM/WB to (Without Stall)
+    add x0, x0, x0
+    add x4, x30, x30
+
+    Result : x4 = -252(FF04)
+
+Test_hazard_14 : Testing WB and Read at the same time
+    add x0, x0, x0
+    add x0, x0, x0
+    add x1, x4, x0
+
+    Result : x1 = -252(FF04)
+
+Test_hazard_15 : Testing WB and Read at the same time
+    ld x2, 1(x0)
+    add x0, x0, x0
+    add x0, x0, x0
+    add x3, x2, x0
+
+    Result : x3 = 17(11)
