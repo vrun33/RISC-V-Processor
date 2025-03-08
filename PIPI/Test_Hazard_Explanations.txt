@@ -1,3 +1,5 @@
+This is one continuous code, broken into sections to explain different hazards.
+
 Test_hazard_1 : Tests Forward from EX/MEM to EX
     addi x5, x0, 63
     add x5, x5, x5
@@ -11,7 +13,7 @@ Test_hazard_2 : Tests Store and Load, Not a Hazard
 
     Result : x7 = -126(FF82), data_mem[17] = -126(FF82)
 
-Test_hazard_3 : Not a hazard, just a test for store and load
+Test_hazard_3 : Hazard, Forward from EX/MEM to EX for sd, and Forward from MEM/WB to EX for ld
     add x8, x5, x5
     sd x7, 0(x8)
     ld x9, 0(x8)
