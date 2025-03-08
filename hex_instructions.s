@@ -33,3 +33,8 @@ beq x10, x26, 4                          # 0x01a50263
 sub x31, x0, x15                         # 0x40f00fb3
 ld x27, 1(x0)                            # 0x00103d83
 ld x28, 1(x27)                           # 0x001dbe03
+addi x29, x10, 1                         # 0x00150e93
+add x0, x0, x0                           # 0x00000033
+ld x30, 0(x29)                           # 0x000ebf03
+add x0, x0, x0                           # 0x00000033
+add x31, x30, x30                        # 0x01ef0fb3

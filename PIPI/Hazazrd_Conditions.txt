@@ -1,0 +1,105 @@
+Instructions:
+
+- add
+- ld(addr, val)
+- sd(addr, val)
+- beq
+
+Conditions:
+
+1 Instruction Combinations:
+
+sd x1, 0(x2)
+Any Instruction
+Solution - Not a hazard
+
+beq x1, x2, 0x8
+If True, then it is a control hazard and 2 wrong instructions would alredy be present in the pipeline
+Solution - Flush the pipeline
+
+2 Instruction Combinations:
+
+add x1, x2, x3 
+add x4, x1, x5
+Solution - Forwarding from EX/MEM
+
+add x1, x2, x3
+ld x6, 0(x1)
+Solution - Forwarding from EX/MEM
+
+add x1, x2, x3
+ld x1, 0(x4)
+Solution - Not a hazard
+
+add x1, x2, x3
+sd x4, 0(x1)
+Solution - Forwarding from EX/MEM
+
+add x1, x2, x3
+sd x1, 0(x4)
+Solution - Forwarding from EX/MEM
+
+add x1, x2, x3
+beq x1, x4, 0x8
+Solution - Forwarding from EX/MEM
+
+ld x1, 0(x2)
+add x3, x1, x4
+Solution - Requires Stall and Forward from MEM/WB
+
+ld x1, 0(x2)
+ld x3, 0(x1)
+Solution - Requires Stall and Forward from MEM/WB
+
+ld x1, 0(x2)
+ld x1, 0(x3)
+Solution - Not a hazard
+
+ld x1, 0(x2)
+sd x3, 0(x1)
+Solution - Requires Stall and Forward from MEM/WB
+
+ld x1, 0(x2)
+sd x1, 0(x3)
+Solution - Forward from MEM/WB into MEM stage
+
+ld x1, 0(x2)
+beq x1, x3, 0x8
+Solution - Requires Stall and Forward from MEM/WB
+
+3 Instruction Combinations:
+
+add x1, x2, x3
+add x1, x1, x4
+add x5, x1, x6
+Solution - Forwarding from EX/MEM over MEM/WB
+
+add x1, x2, x3
+add x4, x5, x6
+ld x7, 0(x1)
+Solution - Forwarding from MEM/WB
+
+add x1, x2, x3
+add x4, x5, x6
+ld x1, 0(x7)
+Solution - Not a hazard
+
+add x1, x2, x3
+add x4, x5, x6
+sd x7, 0(x1)
+Solution - Forwarding from MEM/WB
+
+add x1, x2, x3
+add x4, x5, x6
+sd x1, 0(x7)
+Solution - Forwarding from MEM/WB
+
+add x1, x2, x3
+add x4, x5, x6
+beq x7, x1, 0x8
+Solution - Forwarding from MEM/WB
+
+ld x1, 0(x2)
+add x2, x3, x4
+add x5, x1, x6
+Solution - Requires Forward from MEM/WB
