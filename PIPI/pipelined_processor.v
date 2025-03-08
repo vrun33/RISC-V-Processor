@@ -102,7 +102,6 @@ module pipelined_processor (
     wire mem_read_EX_MEM, mem_write_EX_MEM, mem_to_reg_EX_MEM, reg_write_en_EX_MEM;
     wire [63:0] alu_out_EX_MEM, data_EX_MEM;
     wire [4:0] rd_EX_MEM;
-    wire branch_EX_MEM;
     wire [4:0] rs2_EX_MEM;
     // and2.v
     // performs the AND operation between branch and z_flag
@@ -305,7 +304,6 @@ module pipelined_processor (
         .reg_write_en(reg_write_en_ID_EX),
         .mem_read(mem_read_ID_EX),
         .mem_write(mem_write_ID_EX),
-        .branch(branch_ID_EX),
         .alu_out(alu_out),
         .data(alu_in_2), 
         .rs2_ID_EX(rs2_ID_EX),
@@ -314,7 +312,6 @@ module pipelined_processor (
         .reg_write_en_out(reg_write_en_EX_MEM),
         .mem_read_out(mem_read_EX_MEM),
         .mem_write_out(mem_write_EX_MEM),
-        .branch_out(branch_EX_MEM),
         .alu_out_out(alu_out_EX_MEM),
         .data_out(data_EX_MEM),
         .rs2_ID_EX_out(rs2_EX_MEM),

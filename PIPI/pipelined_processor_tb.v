@@ -52,8 +52,8 @@ module pipelined_processor_tb;
             $display("IF/ID - PC: %h, Instr: %h", uut.IF_ID_pc_out, uut.instr_IF_ID);
             $display("ID/EX - PC: %h, RS1: %d, RS2: %d, RD: %d", 
                      uut.ID_EX_pc_out, uut.rs1_ID_EX, uut.rs2_ID_EX, uut.rd_ID_EX);
-            $display("EX/MEM - ALU Result: %h, Branch: %b, Z Flag: %b", 
-                     uut.alu_out_EX_MEM, uut.branch_EX_MEM, uut.z_flag_EX_MEM);
+            $display("EX/MEM - ALU Result: %h", 
+                     uut.alu_out_EX_MEM);
             $display("MEM/WB - ALU Result: %h, Mem Data: %h, RD: %d", 
                      uut.alu_out_MEM_WB, uut.data_MEM_WB, uut.rd_MEM_WB);
             

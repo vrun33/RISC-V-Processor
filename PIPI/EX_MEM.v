@@ -9,7 +9,6 @@ module EX_MEM(
     input wire reg_write_en,
     input wire mem_read,
     input wire mem_write,
-    input wire branch,
     input wire [63:0] alu_out,
     input wire [63:0] data,
     input wire [4:0] rs2_ID_EX,
@@ -18,7 +17,6 @@ module EX_MEM(
     output wire reg_write_en_out,
     output wire mem_read_out,
     output wire mem_write_out,
-    output wire branch_out,
     output wire [63:0] alu_out_out,
     output wire [63:0] data_out,
     output wire [4:0] rs2_ID_EX_out,
@@ -43,7 +41,6 @@ module EX_MEM(
     assign mem_to_reg_out = mem_to_reg_reg;
     assign reg_write_en_out = reg_write_en_reg;
     assign mem_write_out = mem_write_reg;
-    assign branch_out = branch_reg;
     assign rs2_ID_EX_out = rs2_ID_EX_reg;
 
     // Reg <= Next(input)
@@ -56,7 +53,6 @@ module EX_MEM(
             mem_to_reg_reg <= 1'b0;
             reg_write_en_reg <= 1'b0;
             mem_write_reg <= 1'b0;
-            branch_reg <= 1'b0;
             rs2_ID_EX_reg <= 5'b0;
         end else begin
             alu_out_reg <= alu_out;
@@ -66,7 +62,6 @@ module EX_MEM(
             mem_to_reg_reg <= mem_to_reg;
             reg_write_en_reg <= reg_write_en;
             mem_write_reg <= mem_write;
-            branch_reg <= branch;
             rs2_ID_EX_reg <= rs2_ID_EX;
         end
     end
