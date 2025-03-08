@@ -22,3 +22,7 @@ add x19, x18, x0
 ld x20, 0(x11)
 sd x20, 121(x11)
 ld x21, 121(x11)
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0

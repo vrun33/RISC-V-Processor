@@ -19,3 +19,7 @@ add x17, x14, x15
 add x18, x16, x17
 add x18, x18, x17
 add x19, x18, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0

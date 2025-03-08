@@ -45,7 +45,7 @@ module pipelined_processor_tb;
             $display("\n=== Processor State at Cycle %0d (%t) ===", i, $realtime);
             $display("PC: %h", uut.pc_out);
             $display("Instruction Fetched: %h", uut.instr);
-            $display("Instruction Decoded: %h", uut.instr_IF_ID);
+            // $display("Instruction Decoded: %h", uut.instr_IF_ID);
             
             // Pipeline registers
             $display("\n--- Pipeline Registers ---");
@@ -78,18 +78,18 @@ module pipelined_processor_tb;
                      uut.pc_write, uut.IF_ID_write, uut.control_mux_sel);
             
             // Display some register contents for verification
-            $display("\n--- Register Values ---");
+            // $display("\n--- Register Values ---");
             // $display("x1: %h", uut.register_file_inst.registers[1]);
             // $display("x2: %h", uut.register_file_inst.registers[2]);
-            $display("x3: %h", uut.register_file_inst.registers[3]);
+            // $display("x3: %h", uut.register_file_inst.registers[3]);
             // $display("x4: %h", uut.register_file_inst.registers[4]);
             // $display("x5: %h", uut.register_file_inst.registers[5]);
             
             // Check for program completion
-            // if (uut.instr == 32'h00000000) begin
-            //     $display("\nProgram completed after %0d cycles", i + 1);
-            //     i = 200;
-            // end
+            if (uut.instr == 32'h00000000) begin
+                $display("\nProgram completed after %0d cycles", i + 1);
+                i = 2000;
+            end
             
             test_count = test_count + 1;
         end

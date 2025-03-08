@@ -12,6 +12,10 @@ loop:
     sub x4, x3, x1    // Compute i-n
     beq x4, x10, done  // If i-n == 1 (i==n), ext (done = 4)
     beq x0, x0, loop  // Unconditional branch back to loop (loop = -8)
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
 
 // Final reg values (decimal)
 x1 = n 

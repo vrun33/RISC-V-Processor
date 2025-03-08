@@ -45,3 +45,7 @@ ld x2, 1(x0)
 add x0, x0, x0
 add x0, x0, x0
 add x3, x2, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0

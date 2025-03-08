@@ -29,3 +29,7 @@ beq x0, x0, -18     // loop condition if exit fails
 ld x15, 0(x7)       // load C[0]
 ld x16, 1(x7)       // load C[1]
 ld x17, 2(x7)       // load C[2]
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0

@@ -31,3 +31,7 @@ sub x25, x0, x24
 ld x26, 1(x0)
 beq x10, x26, 4
 sub x31, x0, x15
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0

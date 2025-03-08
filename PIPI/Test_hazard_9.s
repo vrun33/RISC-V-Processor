@@ -28,3 +28,7 @@ sd x21, 1(x22)
 ld x23, 1(x22)
 ld x24, 121(x11)
 sub x25, x0, x24
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0

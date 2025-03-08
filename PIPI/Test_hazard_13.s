@@ -38,3 +38,7 @@ add x0, x0, x0
 ld x30, 0(x29)
 add x0, x0, x0
 add x4, x30, x30
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0

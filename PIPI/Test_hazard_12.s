@@ -36,3 +36,7 @@ ld x28, 1(x27)
 addi x29, x10, 1
 add x0, x0, x0
 ld x30, 0(x29)
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0

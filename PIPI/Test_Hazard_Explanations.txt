@@ -106,3 +106,8 @@ Test_hazard_15 : Testing WB and Read at the same time
     add x3, x2, x0
 
     Result : x3 = 17(11)
+
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0

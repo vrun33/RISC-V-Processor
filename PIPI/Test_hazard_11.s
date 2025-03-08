@@ -33,3 +33,7 @@ beq x10, x26, 4
 sub x31, x0, x15
 ld x27, 1(x0)
 ld x28, 1(x27)
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0

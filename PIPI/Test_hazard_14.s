@@ -41,3 +41,7 @@ add x4, x30, x30
 add x0, x0, x0
 add x0, x0, x0
 add x1, x4, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
+add x0, x0, x0
