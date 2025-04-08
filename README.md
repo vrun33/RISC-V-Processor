@@ -1,4 +1,4 @@
-# (Sequential and Pipelined) RISC-V Processor in iVerilog
+# RISC-V Processor in iVerilog
 
 # Sequential Implementation
 
