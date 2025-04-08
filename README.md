@@ -1,6 +1,6 @@
-# Sequential RISC-V Processor in iVerilog
+# (Sequential and Pipelined) RISC-V Processor in iVerilog
 
-*One might think it's little endian or big endian, but in fact, it's* **PROUD INDIAN o7**
+# Sequential Implementation
 
 ![Sequential Datapath](Seq_Datapath.png)
 
