@@ -261,3 +261,9 @@ The files `Name_exp.txt` contains the instruction with comments for understandin
 5) `Test_LinearSearch_exp.txt` contains instructions for Running a Linear search on an array and store the 0-based index (9 instructions)
 
 6) `Test_FaultInstruction_exp.txt` contains instructions similar to `Test_Basic_exp.txt` but with a fault instruction (19 instructions). The output is unaffected by the fault instruction.
+
+### References:
+
+1) David A. Patterson, John L. Hennessy, *Computer Organization and Design RISC-V Edition: The Hardware Software Interface*.
+
+2) Sarah Harris, David Harris, *Digital Design and Computer Architecture, RISC-V Edition*.
