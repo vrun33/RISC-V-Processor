@@ -4,11 +4,9 @@
 
 ![Sequential Datapath](Seq_Datapath.png)
 
-This is a basic RISC-V processor implemented in iVerilog, as part of the course project for the Spring 25' course "Intro. to Processor Architecture" at IIIT Hyderabad. The components in the sequential processor are mentioned below.
+This is a basic RISC-V (32-bit instruction set) processor, supporting the instructions `add`, `sub`, `and`, `or`, `beq`, `addi`, `ld`, `sd` (might add support for more in the future :p) implemented in iVerilog, as part of the course project for the Spring 2025 course "Introduction to Processor Architecture" at IIIT Hyderabad. The components in the sequential processor are mentioned below.
 
-Team Name - Tervis Scoot
-
-Team Members - Siddarth G, Varun S, M. Samartha
+Team Members - Siddarth G [https://github.com/IamSid44], Varun S [https://github.com/GroanKing05], M. Samartha [https://github.com/samarthamp]
 
 ## PC
 
