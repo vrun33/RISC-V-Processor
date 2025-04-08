@@ -1,6 +1,6 @@
 # RISC-V Processor in iVerilog
 
-# 1. Sequential Implementation
+# Sequential Implementation
 
 ![Sequential Datapath](Seq_Datapath.png)
 
@@ -133,7 +133,7 @@ The files `Name_exp.txt` contains the instruction with comments for understandin
 
 6) `Test_FaultInstruction_exp.txt` contains instructions similar to `Test_Basic_exp.txt` but with a fault instruction (19 instructions). The output is unaffected by the fault instruction.
 
-# 2. Pipeline Implementation
+# Pipeline Implementation
 
 A pipelined processor increases the throughput at the cost of latency, which is a good tradeoff. It is an extension of the sequential processor. We divide the sequenial processor into 5 stages namely the `Instruction Fetch`, `Instruction Decode`, `Execute`, `Memory`, `Write back`. We add register files with appropriate inputs and outputs in between these stages and connect them accordingly. The pipeline registers are added to store the intermediate values between the stages. The pipeline registers are synchronous and are updated at the rising edge of the clock (_except the register file being written on the negative edge_). Note that all the registers have a clock and reset as inputs, unless explicitly stated otherwise.
 
