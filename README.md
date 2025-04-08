@@ -1,6 +1,6 @@
 # RISC-V Processor in iVerilog
 
-# Sequential Implementation
+# 1. Sequential Implementation
 
 ![Sequential Datapath](Seq_Datapath.png)
 
@@ -135,7 +135,7 @@ The files `Name_exp.txt` contains the instruction with comments for understandin
 
 6) `Test_FaultInstruction_exp.txt` contains instructions similar to `Test_Basic_exp.txt` but with a fault instruction (19 instructions). The output is unaffected by the fault instruction.
 
-# Pipelined RISC-V Processor in iVerilog
+# 2. Pipeline Implementation
 
 A pipelined processor increases the throughput at the cost of latency, which is a good tradeoff. It is an extension of the sequential processor. We divide the sequenial processor into 5 stages namely the `Instruction Fetch`, `Instruction Decode`, `Execute`, `Memory`, `Write back`. We add register files with appropriate inputs and outputs in between these stages and connect them accordingly. The pipeline registers are added to store the intermediate values between the stages. The pipeline registers are synchronous and are updated at the rising edge of the clock (_except the register file being written on the negative edge_). Note that all the registers have a clock and reset as inputs, unless explicitly stated otherwise.
 
@@ -246,7 +246,11 @@ The instructions supported by this processor, are `addi`, `and`, `sub`, `add`, `
 
 ## Testing Codes
 
-The files `Name_exp.txt` contains the instruction with comments for understanding the code. The files `Name_Code.txt` contains the executable Byte addressed Hexadecimal Instructions. The code files are generated through the automated python script - `riscv_instruction_encoder.py` and the code file path is included in the `instruction_memory.v` for running that particular code.
+The files `Name_exp.txt` contains the instruction with comments for understanding the code. The files `Name_Code.txt` contains the executable Byte addressed Hexadecimal Instructions. 
+
+The code files are generated through the automated python script - `riscv_instruction_encoder.py`, which takes in the input (assembly instructions) `instructions.s`, and generates two outputs, first, the `hex_instructions.s`, which contains the assembly and corresponding hex instructions, and second, `executable.s` which contains instructions in hex **only**, such that each line is a byte of memory. 
+
+The code file path is included in the `instruction_memory.v` for running it.
 
 ## Description of Test Cases
 
@@ -262,7 +266,7 @@ The files `Name_exp.txt` contains the instruction with comments for understandin
 
 6) `Test_FaultInstruction_exp.txt` contains instructions similar to `Test_Basic_exp.txt` but with a fault instruction (19 instructions). The output is unaffected by the fault instruction.
 
-### References:
+## References:
 
 1) David A. Patterson, John L. Hennessy, *Computer Organization and Design RISC-V Edition: The Hardware Software Interface*.
 
