@@ -6,7 +6,7 @@
 
 This is a basic RISC-V (32-bit instruction set) processor, supporting the instructions `add`, `sub`, `and`, `or`, `beq`, `addi`, `ld`, `sd` (might add support for more in the future :p) implemented in iVerilog, as part of the course project for the Spring 2025 course "Introduction to Processor Architecture" at IIIT Hyderabad. The components in the sequential processor are mentioned below.
 
-Team Members - Siddarth G [https://github.com/IamSid44], Varun S [https://github.com/vrun33], M. Samartha [https://github.com/samarthamp]
+Team Members - Siddarth G [https://github.com/IamSid44], Varun S [https://github.com/vroon33], M. Samartha [https://github.com/samarthamp]
 
 ## PC
 
